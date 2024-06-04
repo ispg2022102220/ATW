@@ -1,0 +1,176 @@
+<header>
+    <div class="bg-header">
+        <h1>
+            Triathlon Time Calculator
+        </h1>
+    </div>
+</header>
+
+<main>
+    <div class="container mt-5 d-flex justify-content-between align-items-center">
+        <div class="info-container p-4 rounded-2">
+            <div class="text-center mb-4 p-2 title rounded-2">
+                <h3 class="m-0 p-0">Distance</h3>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="align-middle me-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-life-preserver me-2" viewBox="0 0 16 16">
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m6.43-5.228a7.03 7.03 0 0 1-3.658 3.658l-1.115-2.788a4 4 0 0 0 1.985-1.985zM5.228 14.43a7.03 7.03 0 0 1-3.658-3.658l2.788-1.115a4 4 0 0 0 1.985 1.985zm9.202-9.202-2.788 1.115a4 4 0 0 0-1.985-1.985l1.115-2.788a7.03 7.03 0 0 1 3.658 3.658m-8.087-.87a4 4 0 0 0-1.985 1.985L1.57 5.228A7.03 7.03 0 0 1 5.228 1.57zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                    </svg>
+                    Swim
+                </div>
+                <div class="inp-group">
+                    <input type="number" class="input px-1" (keydown)="distanceChange();" [(ngModel)]="distances[0]['swim']">
+                    <span class="unity">Meters</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="align-middle me-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
+                        <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"/>
+                    </svg>
+                    Bike
+                </div>
+                <div class="inp-group">
+                    <input type="number" class="input px-1" (keydown)="distanceChange();" [(ngModel)]="distances[0]['bike']">
+                    <span class="unity">Meters</span>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <div class="align-middle me-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
+                        <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
+                        <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
+                    </svg>
+                    Run
+                </div>
+                <div class="inp-group">
+                    <input type="number" class="input px-1" (keydown)="distanceChange();" [(ngModel)]="distances[0]['run']">
+                    <span class="unity">Meters</span>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('sprint');">Sprint</button>
+                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('olympic');">Olympic</button>
+                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('halfIronman');">Half-Ironman</button>
+                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('ironman');">Iroman</button>
+            </div>
+        </div>
+
+        <div class="info-container p-4 rounded-2">
+            <div class="text-center title mb-4 p-2 rounded-2">
+                <h3 class="p-0 m-0">Time & Pace</h3>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="time-container">
+                    <div>
+                        <h5 class="text-center mt-3 mb-2">Time</h5>
+                        <div class="input-group" id="swim">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-life-preserver me-2" viewBox="0 0 16 16">
+                                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m6.43-5.228a7.03 7.03 0 0 1-3.658 3.658l-1.115-2.788a4 4 0 0 0 1.985-1.985zM5.228 14.43a7.03 7.03 0 0 1-3.658-3.658l2.788-1.115a4 4 0 0 0 1.985 1.985zm9.202-9.202-2.788 1.115a4 4 0 0 0-1.985-1.985l1.115-2.788a7.03 7.03 0 0 1 3.658 3.658m-8.087-.87a4 4 0 0 0-1.985 1.985L1.57 5.228A7.03 7.03 0 0 1 5.228 1.57zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+                            </svg>
+                            <input type="number" [(ngModel)]="swim_time[0]['hour']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            h
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="swim_time[0]['minute']" (keydown)="valueChange();" class="inp-time-pace">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="swim_time[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <div class="input-group">
+                            <p>T1:</p>
+                            <input type="number" [(ngModel)]="interval_01[0]['minute']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="interval_01[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
+                                <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"/>
+                            </svg>
+                            <input type="number"  [(ngModel)]="bike_time[0]['hour']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            h
+                            <span>:</span>
+                            <input type="number"  [(ngModel)]="bike_time[0]['minute']" (keydown)="valueChange();" class="inp-time-pace">
+                            m
+                            <span>:</span>
+                            <input type="number"  [(ngModel)]="bike_time[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                    <div class="my-3">
+                        <div class="input-group">
+                            <p>T2:</p>
+                            <input type="number" [(ngModel)]="interval_02[0]['minute']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="interval_02[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                    <div>
+                        <div class="input-group">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
+                                <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
+                                <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
+                            </svg>
+                            <input type="number" [(ngModel)]="run_time[0]['hour']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            h
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="run_time[0]['minute']" (keydown)="valueChange();" class="inp-time-pace">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="run_time[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                </div>
+                <div class="pace-container">
+                    <h5 class="text-center">Pace</h5>
+                    <div class="input-group">
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="swim_pace[0]['minute']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="swim_pace[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                            <span class="ms-2">/ 50 meters</span>
+                        </div>
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="bike_pace[0]['speed']" (keydown)="valueChange();" class="inp-time-pace-bike ms-2">
+                            m/h
+                        </div>
+                        <div class="input-group">
+                            <input type="number" [(ngModel)]="run_pace[0]['minute']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+                            m
+                            <span>:</span>
+                            <input type="number" [(ngModel)]="run_pace[0]['minute']" (keydown)="valueChange();" class="inp-time-pace">
+                            s
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-primary p-2 mt-4 w-100">Calculate</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="input-group">
+        <h5 class="text-center m-0 mt-5 me-2">Total:</h5>
+        <input type="number" [(ngModel)]="run_time[0]['hour']" (keydown)="valueChange();" class="inp-time-pace ms-2">
+        h
+        <span>:</span>
+        <input type="number" [(ngModel)]="run_time[0]['minute']" (keydown)="valueChange();" class="inp-time-pace">
+        m
+        <span>:</span>
+        <input type="number" [(ngModel)]="run_time[0]['second']" (keydown)="valueChange();" class="inp-time-pace">
+        s
+    </div>
+</main>
