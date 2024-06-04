@@ -144,14 +144,11 @@
                         </div>
                         <div class="input-group">
                             <input type="number" [(ngModel)]="bike_pace[0]['speed']" (keyup)="valueChange();" class="inp-time-pace-bike ms-2">
-                            m/h
+                            m/s
                         </div>
                         <div class="input-group">
-                            <input type="number" [(ngModel)]="run_pace[0]['minute']" (keyup)="valueChange();" class="inp-time-pace ms-2">
-                            m
-                            <span>:</span>
-                            <input type="number" [(ngModel)]="run_pace[0]['minute']" (keyup)="valueChange();" class="inp-time-pace">
-                            s
+                            <input type="number" [(ngModel)]="run_pace[0]['speed']" (keyup)="valueChange();" class="inp-time-pace-bike ms-2">
+                            m/s
                         </div>
                     </div>
                 </div>
