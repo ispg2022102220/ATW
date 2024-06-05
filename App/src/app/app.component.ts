@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.css'
 })
 
-export class AppComponent 
+export class AppComponent  
 {
   distances : TriathlonDistance[] = [new TriathlonDistance(0,0,0)];
 
@@ -27,7 +27,7 @@ export class AppComponent
   run_pace : TriathlonPace[] = [new TriathlonPace(0)];
 
   total_time : TriathlonTime = new TriathlonTime(0,0,0);
-  goal_result : TriathlonGoal = new TriathlonGoal(0, 0, 0, this.total_time);
+  goal_result : TriathlonGoal = new TriathlonGoal(0, 0, 0, this.total_time, 0);
 
   swim_distance = this.distances[0]['swim'];
   bike_distance = this.distances[0]['bike'];
@@ -104,29 +104,45 @@ export class AppComponent
   }
 
   setGoal() {
-    const distance = {
-      swim: this.swim_distance,
-      bike: this.bike_distance,
-      run: this.run_distance,
+    const swim_seconds = this.swim_time[0].hour * 3600 + this.swim_time[0].minute * 60 + this.swim_time[0].second > 0;
+    const bike_seconds = this.bike_time[0].hour * 3600 + this.bike_time[0].minute * 60 + this.bike_time[0].second > 0;
+    const run_seconds = this.run_time[0].hour * 3600 + this.run_time[0].minute * 60 + this.run_time[0].second > 0;
+    const interval_01 = this.interval_01[0]['minute'] * 60 + this.interval_01[0]['second'] > 0;
+    const interval_02 = this.interval_02[0]['minute'] * 60 + this.interval_02[0]['second'] > 0;
+    const distance_flag = this.distances[0]['swim'] > 0 && this.distances[0]['run'] > 0 && this.distances[0]['bike'] > 0;
+
+    if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02 && distance_flag)
+    {
+      const interval = {
+        interval_01: this.interval_01,
+        interval_02: this.interval_02,
+      };
+
+      const distance = {
+        swim: this.swim_distance,
+        bike: this.bike_distance,
+        run: this.run_distance,
+      }
+  
+      const time = {
+        swim: this.swim_time,
+        bike: this.bike_time,
+        run: this.run_time,
+      }
+  
+      const pace = {
+        swim: this.swim_pace,
+        bike: this.bike_pace,
+        run: this.run_pace,
+      }
+  
+      this.goal_result['distance'] = distance;
+      this.goal_result['time'] = time;
+      this.goal_result['pace'] = pace;
+      this.goal_result['interval'] = interval;
+  
+      console.log(this.goal_result);
     }
-
-    const time = {
-      swim: this.swim_time,
-      bike: this.bike_time,
-      run: this.run_time,
-    }
-
-    const pace = {
-      swim: this.swim_pace,
-      bike: this.bike_pace,
-      run: this.run_pace,
-    }
-
-    this.goal_result['distance'] = distance;
-    this.goal_result['time'] = time;
-    this.goal_result['pace'] = pace;
-
-    console.log(this.goal_result);
   }
 
   totalTimeUpdate() {
@@ -347,7 +363,7 @@ export class AppComponent
 
 class TriathlonGoal
 {
-  constructor(public distance : Object, public time : Object, public pace : Object, public total_time : TriathlonTime) 
+  constructor(public distance : Object, public time : Object, public pace : Object, public total_time : TriathlonTime, public interval : Object) 
   {
     
   }

@@ -1,5 +1,5 @@
 .bg-header {
-    background-color: rgb(126, 173, 163);
+    background-color: rgb(83, 131, 146);
     height: 12rem;
     width: 100%;
     display: flex;
@@ -58,8 +58,20 @@
     }
 }
 
+.warning {
+    background-color: rgb(179, 226, 167);
+    color: black;
+}
+
 .button-submit {
     width: 48%;
+    background-color: rgb(98, 149, 162) !important;
+    color: rgb(255,255,255);
+    border:none;
+}
+
+.button-submit:hover {
+    background-color: rgb(86, 134, 146) !important;
 }
 
 .arrow {
@@ -98,7 +110,7 @@
 }
 
 .input:focus {
-    border-bottom-color: rgb(126, 173, 163);
+    border-bottom-color: rgb(179, 226, 167);
 }
 
 .inp-group {
@@ -119,7 +131,7 @@
 .title {
     color: white;
     width: 100%;
-    background-color:  rgb(126, 173, 163);
+    background-color:  rgb(128, 185, 173);
     box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
 }
@@ -145,7 +157,11 @@
 }
 
 .inp-time-pace:focus {
-    border-bottom-color: rgb(126, 173, 163);
+    border-bottom-color: rgb(179, 226, 167);
+}
+
+.inp-time-pace-bike:focus {
+    border-bottom-color: rgb(179, 226, 167);
 }
 
 .input-group {
