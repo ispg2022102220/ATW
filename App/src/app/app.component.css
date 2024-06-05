@@ -12,6 +12,7 @@
 .bg-header h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     text-align: center;
+    gap: 1rem;
 }
 
 .info-container {
@@ -22,6 +23,40 @@
 .info-container-xl {
     width: 100%;
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-container {
+    display: flex;
+    justify-content: space-between; /* Ensure space between children */
+    flex-wrap: wrap;
+}
+
+.statistics-container {
+    width: 62%;
+    margin-bottom: 1rem;
+}
+
+.list-container {
+    width: 36%;
+    margin-bottom: 1rem;
+}
+
+.info-list-container {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(224, 251, 226);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.title-list {
+    background-color: rgb(176, 235, 180);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.time-list {
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
 }
 
 @media only screen and (max-width: 992px) {
@@ -55,6 +90,14 @@
     .warning {
         border-radius: 0px !important;
         padding: 14px 16px !important;
+    }
+
+    .feedback-container {
+        flex-direction: column; /* Stack children vertically */
+    }
+    .statistics-container,
+    .list-container {
+        width: 100%; /* Make children full width */
     }
 }
 

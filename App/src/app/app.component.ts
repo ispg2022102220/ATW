@@ -27,7 +27,13 @@ export class AppComponent
   run_pace : TriathlonPace[] = [new TriathlonPace(0)];
 
   total_time : TriathlonTime = new TriathlonTime(0,0,0);
-  goal_result : TriathlonGoal = new TriathlonGoal(0, 0, 0, this.total_time, 0);
+  goal_result : TriathlonGoal = new TriathlonGoal(
+    new TriathlonDistance(0,0,0), 
+    {swim: new TriathlonTime(0,0,0), run: new TriathlonTime(0,0,0), bike: new TriathlonTime(0,0,0)}, 
+    {swim: new TriathlonPace_swim(0,0), run: new TriathlonPace(0), bike: new TriathlonPace(0)}, 
+    this.total_time, 
+    {interval_01: new TriathlonInterval(0,0), interval_02: new TriathlonInterval(0,0)}
+  );
 
   swim_distance = this.distances[0]['swim'];
   bike_distance = this.distances[0]['bike'];
@@ -39,7 +45,7 @@ export class AppComponent
   buttonClicked_halfIronman = false;
   buttonClicked_ironman = false;
   showWarning = false;
-
+  saveGoal = false;
   showFeedback = false;
 
   toggleFeedback() {
@@ -113,36 +119,35 @@ export class AppComponent
 
     if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02 && distance_flag)
     {
-      const interval = {
-        interval_01: this.interval_01,
-        interval_02: this.interval_02,
-      };
+      // Insert Interval
+      this.goal_result['interval']['interval_01'] = this.interval_01[0];
+      this.goal_result['interval']['interval_02'] = this.interval_02[0];
 
-      const distance = {
-        swim: this.swim_distance,
-        bike: this.bike_distance,
-        run: this.run_distance,
-      }
+      // Insert Distance
+      this.goal_result['distance']['swim'] = this.swim_distance;
+      this.goal_result['distance']['bike'] = this.bike_distance;
+      this.goal_result['distance']['run'] = this.run_distance;
   
-      const time = {
-        swim: this.swim_time,
-        bike: this.bike_time,
-        run: this.run_time,
-      }
+      // Insert Time
+      this.goal_result['time']['swim'] = this.swim_time[0];
+      this.goal_result['time']['bike'] = this.bike_time[0];
+      this.goal_result['time']['run'] = this.run_time[0];
+
+      // Insert Pace
+      this.goal_result['pace']['swim'] = this.swim_pace[0];
+      this.goal_result['pace']['bike'] = this.bike_pace[0];
+      this.goal_result['pace']['run'] = this.run_pace[0];
   
-      const pace = {
-        swim: this.swim_pace,
-        bike: this.bike_pace,
-        run: this.run_pace,
-      }
-  
-      this.goal_result['distance'] = distance;
-      this.goal_result['time'] = time;
-      this.goal_result['pace'] = pace;
-      this.goal_result['interval'] = interval;
-  
+      this.saveGoal = !this.saveGoal;
+
       console.log(this.goal_result);
     }
+  }
+
+  removeGoal() {
+    this.goal_result['distance'].bike = 0;
+    this.saveGoal = !this.saveGoal;
+    console.log(this.goal_result);
   }
 
   totalTimeUpdate() {
@@ -363,7 +368,12 @@ export class AppComponent
 
 class TriathlonGoal
 {
-  constructor(public distance : Object, public time : Object, public pace : Object, public total_time : TriathlonTime, public interval : Object) 
+  constructor(
+    public distance : TriathlonDistance,
+    public time : {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime}, 
+    public pace : {swim: TriathlonPace_swim, bike: TriathlonPace, run: TriathlonPace}, 
+    public total_time : TriathlonTime, 
+    public interval : {interval_01: TriathlonInterval, interval_02: TriathlonInterval}) 
   {
     
   }
