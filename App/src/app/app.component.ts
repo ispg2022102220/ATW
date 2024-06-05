@@ -35,6 +35,8 @@ export class AppComponent
     {interval_01: new TriathlonInterval(0,0), interval_02: new TriathlonInterval(0,0)}
   );
 
+  previous_05: Array<TriathlonGoal> = [];
+
   swim_distance = this.distances[0]['swim'];
   bike_distance = this.distances[0]['bike'];
   run_distance = this.distances[0]['run'];
@@ -109,6 +111,11 @@ export class AppComponent
     }
   }
 
+  //Adicionar a lista dos ultimos 5 com unshift para adicionar no inicio
+  getPreviousFiveRecords() {
+
+  }
+
   setGoal() {
     const swim_seconds = this.swim_time[0].hour * 3600 + this.swim_time[0].minute * 60 + this.swim_time[0].second > 0;
     const bike_seconds = this.bike_time[0].hour * 3600 + this.bike_time[0].minute * 60 + this.bike_time[0].second > 0;
@@ -120,8 +127,11 @@ export class AppComponent
     if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02 && distance_flag)
     {
       // Insert Interval
-      this.goal_result['interval']['interval_01'] = this.interval_01[0];
-      this.goal_result['interval']['interval_02'] = this.interval_02[0];
+      const interval1: TriathlonInterval = new TriathlonInterval(this.interval_01[0]['minute'], this.interval_01[0]['second']);
+      const interval2: TriathlonInterval = new TriathlonInterval(this.interval_02[0]['minute'], this.interval_02[0]['second']);
+
+      this.goal_result['interval']['interval_01'] = interval1;
+      this.goal_result['interval']['interval_02'] = interval2;
 
       // Insert Distance
       this.goal_result['distance']['swim'] = this.swim_distance;
@@ -129,18 +139,24 @@ export class AppComponent
       this.goal_result['distance']['run'] = this.run_distance;
   
       // Insert Time
-      this.goal_result['time']['swim'] = this.swim_time[0];
-      this.goal_result['time']['bike'] = this.bike_time[0];
-      this.goal_result['time']['run'] = this.run_time[0];
+      const swimTime: TriathlonTime = new TriathlonTime(this.swim_time[0]['hour'], this.swim_time[0]['minute'], this.swim_time[0]['second']);
+      const bikeTime: TriathlonTime = new TriathlonTime(this.bike_time[0]['hour'], this.bike_time[0]['minute'], this.bike_time[0]['second']);
+      const runTime: TriathlonTime = new TriathlonTime(this.run_time[0]['hour'], this.run_time[0]['minute'], this.run_time[0]['second']);
+
+      this.goal_result['time']['swim'] = swimTime;
+      this.goal_result['time']['bike'] = bikeTime;
+      this.goal_result['time']['run'] = runTime;
 
       // Insert Pace
-      this.goal_result['pace']['swim'] = this.swim_pace[0];
-      this.goal_result['pace']['bike'] = this.bike_pace[0];
-      this.goal_result['pace']['run'] = this.run_pace[0];
+      const swimPace: TriathlonPace_swim = new TriathlonPace_swim(this.swim_pace[0]['minute'], this.swim_pace[0]['second']);
+      const bikePace: TriathlonPace = new TriathlonPace(this.bike_pace[0]['speed']);
+      const runPace: TriathlonPace = new TriathlonPace(this.run_pace[0]['speed']);
+
+      this.goal_result['pace']['swim'] = swimPace;
+      this.goal_result['pace']['bike'] = bikePace;
+      this.goal_result['pace']['run'] = runPace;
   
       this.saveGoal = !this.saveGoal;
-
-      console.log(this.goal_result);
     }
   }
 
