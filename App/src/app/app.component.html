@@ -7,7 +7,7 @@
 </header>
 
 <main>
-    <div class="container mt-5 d-flex justify-content-between align-items-center">
+    <div class="container mt-5 p-0 d-flex justify-content-between align-items-center">
         <div class="info-container p-4 rounded-2">
             <div class="text-center mb-4 p-2 title rounded-2">
                 <h3 class="m-0 p-0">Distance</h3>
@@ -50,10 +50,17 @@
                 </div>
             </div>
             <div class="text-center mt-5">
-                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('sprint');">Sprint</button>
-                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('olympic');">Olympic</button>
-                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('halfIronman');">Half-Ironman</button>
-                <button class="me-1 btn-white" (click)="$event.preventDefault(); fillDistance('ironman');">Iroman</button>
+                <button class="me-1 btn-white" [class.active]="buttonClicked_sprint" (click)="$event.preventDefault(); fillDistance('sprint');">Sprint</button>
+                <button class="me-1 btn-white" [class.active]="buttonClicked_olympic" (click)="$event.preventDefault(); fillDistance('olympic');">Olympic</button>
+                <button class="me-1 btn-white" [class.active]="buttonClicked_halfIronman" (click)="$event.preventDefault(); fillDistance('halfIronman');">Half-Ironman</button>
+                <button class="me-1 btn-white" [class.active]="buttonClicked_ironman" (click)="$event.preventDefault(); fillDistance('ironman');">Iroman</button>
+            </div>
+            <div class="text-center mt-4">
+                <button (click)="toggleWarning();" [class.active]="showWarning" class="btn-white">
+                    Cutoff Rules <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-left arrow" [class.down]="showWarning" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0"/>
+                    </svg>
+                </button>
             </div>
         </div>
 
@@ -61,7 +68,7 @@
             <div class="text-center title mb-4 p-2 rounded-2">
                 <h3 class="p-0 m-0">Time & Pace</h3>
             </div>
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between">
                 <div class="time-container">
                     <div>
                         <h5 class="text-center mt-3 mb-2">Time</h5>
@@ -132,42 +139,77 @@
                     </div>
                 </div>
                 <div class="pace-container">
-                    <h5 class="text-center">Pace</h5>
+                    <h5 class="text-center mt-3">Pace</h5>
                     <div class="input-group">
                         <div class="input-group">
-                            <input type="number" [(ngModel)]="swim_pace[0]['minute']" (keyup)="valueChange();" class="inp-time-pace ms-2">
+                            <input type="number" [(ngModel)]="swim_pace[0]['minute']" (keyup)="update_swim_time();" class="inp-time-pace ms-2">
                             m
                             <span>:</span>
-                            <input type="number" [(ngModel)]="swim_pace[0]['second']" (keyup)="valueChange();" class="inp-time-pace">
+                            <input type="number" [(ngModel)]="swim_pace[0]['second']" (keyup)="update_swim_time();" class="inp-time-pace">
                             s
                             <span class="ms-2">/ 50 meters</span>
                         </div>
                         <div class="input-group">
-                            <input type="number" [(ngModel)]="bike_pace[0]['speed']" (keyup)="valueChange();" class="inp-time-pace-bike ms-2">
+                            <input type="number" [(ngModel)]="bike_pace[0]['speed']" (keyup)="update_bike_time();" class="inp-time-pace-bike ms-2">
                             m/s
                         </div>
                         <div class="input-group">
-                            <input type="number" [(ngModel)]="run_pace[0]['speed']" (keyup)="valueChange();" class="inp-time-pace-bike ms-2">
+                            <input type="number" [(ngModel)]="run_pace[0]['speed']" (keyup)="update_run_time();" class="inp-time-pace-bike ms-2">
                             m/s
-                        </div>
+                        </div> 
+                    </div>
+                    <h5 class="text-center mt-auto">Total</h5>
+                    <div class="input-group">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                            <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
+                            <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
+                        </svg>
+                        <input type="number" [(ngModel)]="total_time.hour" (keyup)="valueChange();" class="inp-time-pace ms-2">
+                        h
+                        <span>:</span>
+                        <input type="number" [(ngModel)]="total_time.minute" (keyup)="valueChange();" class="inp-time-pace">
+                        m
+                        <span>:</span>
+                        <input type="number" [(ngModel)]="total_time.second" (keyup)="valueChange();" class="inp-time-pace">
+                        s
                     </div>
                 </div>
             </div>
-            <div>
-                <button class="btn btn-primary p-2 mt-4 w-100">Calculate</button>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <button (click)="setGoal();" class="btn btn-primary p-2 mt-4 button-submit">Set Goal</button>
+                <button *ngIf="!showFeedback" class="btn btn-primary p-2 mt-4 button-submit" (click)="toggleFeedback();">Get Feedback</button>
+                <button *ngIf="showFeedback" class="btn btn-primary p-2 mt-4 button-submit" (click)="toggleFeedback();">Close Feedback</button>
+            </div> 
+        </div>
+    </div>
+
+    <div *ngIf="showWarning">
+        <div class="container px-3 py-3 bg-danger rounded-2 mt-4 mb-5 warning">
+            <ul class="m-0">
+                <li>
+                    <p class="m-0 p-0"><strong>Sprint Triathlon: Total time cutoff around 4 hours</strong></p>
+                </li>
+                <li>
+                    <p class="m-0 p-0"><strong>Olympic Triathlon: Total time cutoff around 4 hours</strong></p>
+                </li>
+                <li>
+                    <p class="m-0 p-0"><strong>Half Ironman: Swim cutoff around 1 hour 10 minutes, bike cutoff around 5 hours 30 minutes (total), run cutoff around 8 hours 30 minutes (total)</strong></p>
+                </li>
+                <li>
+                    <p class="m-0 p-0"><strong>Ironman: Swim cutoff around 2 hours 20 minutes, bike cutoff around 10 hours 30 minutes (total), run cutoff around 17 hours (total)</strong></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div *ngIf="showFeedback">
+        <div class="container my-5 p-0 d-flex justify-content-between align-items-center">
+            <div class="info-container-xl p-4 rounded-2">
+                <div class="text-center title p-2 rounded-2">
+                    <h3 class="p-0 m-0">Time & Pace</h3>
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="input-group">
-        <h5 class="text-center m-0 mt-5 me-2">Total:</h5>
-        <input type="number" [(ngModel)]="run_time[0]['hour']" (keyup)="valueChange();" class="inp-time-pace ms-2">
-        h
-        <span>:</span>
-        <input type="number" [(ngModel)]="run_time[0]['minute']" (keyup)="valueChange();" class="inp-time-pace">
-        m
-        <span>:</span>
-        <input type="number" [(ngModel)]="run_time[0]['second']" (keyup)="valueChange();" class="inp-time-pace">
-        s
-    </div>
+
 </main>

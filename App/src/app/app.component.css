@@ -1,7 +1,7 @@
 .bg-header {
     background-color: rgb(126, 173, 163);
     height: 12rem;
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,9 +19,15 @@
     box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+.info-container-xl {
+    width: 100%;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 @media only screen and (max-width: 992px) {
     .container {
         flex-direction: column;
+        padding: 0px 16px !important;
     }
     .info-container {
         width: 100%;
@@ -36,6 +42,7 @@
         flex-direction: column;
         align-items: center;
         float: right;
+        margin-left: 8px;
     }
     .time-container{
         display: flex;
@@ -44,6 +51,23 @@
         align-items: center;
         float: right;
     }
+
+    .warning {
+        border-radius: 0px !important;
+        padding: 14px 16px !important;
+    }
+}
+
+.button-submit {
+    width: 48%;
+}
+
+.arrow {
+    transition: transform 0.1s ease;
+}
+
+.arrow.down {
+    transform: rotate(-90deg);
 }
 
 .btn-white {
@@ -53,11 +77,11 @@
     margin-left: 8px;
     padding: 4px 20px; /* Add some padding for better appearance */
     cursor: pointer; /* Change cursor to pointer on hover */
-    transition: border-bottom-color 0.4s ease; /* Smooth transition for background color and border-bottom */
+    transition: border-bottom-color 0.2s ease; /* Smooth transition for background color and border-bottom */
 }
 
-.btn-white:active {
-    border-bottom: rgba(0, 0, 0, 1);
+.btn-white.active {
+    border-bottom: 2px solid rgba(0, 0, 0, 1);
 }
 
 .btn-white:hover { 
@@ -94,6 +118,7 @@
 
 .title {
     color: white;
+    width: 100%;
     background-color:  rgb(126, 173, 163);
     box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
@@ -137,17 +162,19 @@
     padding: 0px;
 }
 
-.time-container{
+.time-container {
     display: flex;
-    width: 50%;
+    width: 54% !important;
     flex-direction: column;
     align-items: center;
-    float: left;
+    justify-content: space-around; /* Ensure space around items */
+    height: 100%; /* Ensure it takes full height of the parent */
+    float: right;
 }
 
-.pace-container{
+.pace-container {
     display: flex;
-    width: 50%;
+    width: 46% !important;
     flex-direction: column;
     align-items: center;
     float: right;
