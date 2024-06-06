@@ -70,6 +70,17 @@
     border-bottom-right-radius: 10px;
 }
 
+.info-list-container-previous {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(224, 251, 226);
+}
+
+.info-list-container-previous.last {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 .title-list {
     background-color: rgb(176, 235, 180);
     border-top-left-radius: 10px;
