@@ -38,8 +38,11 @@ export class AppComponent
 
   previous_05: Array<TriathlonGoal> = this.getPreviousFiveRecords();
   previous_03: Array<TriathlonGoal> = this.getPreviousThreeRecords();
-  previous_03_percentages: number[] = [];
-  previous_05_percentages: number[] = [];
+  averagePace_03: { swim: number, bike: number, run: number } = { swim: 0, bike: 0, run: 0 };
+  averagePace_05: { swim: number, bike: number, run: number } = { swim: 0, bike: 0, run: 0 };
+  differencePace_03: { swim: number, bike: number, run: number } = { swim: 0, bike: 0, run: 0 };
+  differencePace_05: { swim: number, bike: number, run: number } = { swim: 0, bike: 0, run: 0 };
+
 
   swim_distance = this.distances[0]['swim'];
   bike_distance = this.distances[0]['bike'];
@@ -236,10 +239,18 @@ export class AppComponent
     ];
   }
 
-  ngOnInit()
-  {
-    this.calculatePercentages();
-  }
+  ngOnInit() {
+    this.goal_result = new TriathlonGoal(
+      new TriathlonDistance(1500, 40000, 10000),
+      { swim: new TriathlonTime(1, 0, 0), bike: new TriathlonTime(2, 0, 0), run: new TriathlonTime(1, 30, 0) },
+      { swim: new TriathlonPace_swim(0, 1), bike: new TriathlonPace(20), run: new TriathlonPace(10) },
+      new TriathlonTime(4, 30, 0),
+      { interval_01: new TriathlonInterval(0, 0), interval_02: new TriathlonInterval(0, 0) }
+    );
+
+    this.previous_03 = this.getPreviousThreeRecords();
+    this.previous_05 = this.getPreviousFiveRecords();
+  }  
 
   setRecord(distance : TriathlonDistance, 
       time : {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime}, 
@@ -301,6 +312,9 @@ export class AppComponent
       this.goal_result['pace']['run'] = runPace;
   
       this.saveGoal = !this.saveGoal;
+      // Ivo
+      this.calculatePaceAverages();
+      this.calculatePerformanceDifferences();
     }
   }
 
@@ -525,32 +539,39 @@ export class AppComponent
     this.update_run_pace();
   }
 
-  calculatePercentages()
-  {
-    const calculatePercentage = (goal: TriathlonGoal, records: Array<TriathlonGoal>) =>
-    {
-      const totalDistance = goal.distance.swim + goal.distance.bike + goal.distance.run;
-
-      if (totalDistance === 0)
-      {
-        return records.map(() => 0);
-      }
-
-      return records.map(record =>
-      {
-        const recordDistance = record.distance.swim + record.distance.bike + record.distance.run;
-        return (recordDistance / totalDistance) * 100;
-      });
+  calculatePaceAverages() {
+    const calculateAverage = (records: Array<TriathlonGoal>) => {
+      const totalPaceSwim = records.reduce((sum, record) => sum + (record.pace.swim.minute * 60 + record.pace.swim.second), 0);
+      const totalPaceBike = records.reduce((sum, record) => sum + record.pace.bike.speed, 0);
+      const totalPaceRun = records.reduce((sum, record) => sum + record.pace.run.speed, 0);
+  
+      return {
+        swim: totalPaceSwim / records.length,
+        bike: totalPaceBike / records.length,
+        run: totalPaceRun / records.length
+      };
     };
   
-    this.previous_03_percentages = calculatePercentage(this.goal_result, this.previous_03);
-    this.previous_05_percentages = calculatePercentage(this.goal_result, this.previous_05);
+    this.averagePace_03 = calculateAverage(this.previous_03);
+    this.averagePace_05 = calculateAverage(this.previous_05);
   }
 
-  isInvalidPercentage(percentage: number): boolean
-  {
-    return isNaN(percentage) || !isFinite(percentage);
-  }
+  calculatePerformanceDifferences() {
+    const calculateDifference = (average: { swim: number, bike: number, run: number }, goal: TriathlonGoal) => {
+      const goalPaceSwim = goal.pace.swim.minute * 60 + goal.pace.swim.second;
+      const goalPaceBike = goal.pace.bike.speed;
+      const goalPaceRun = goal.pace.run.speed;
+  
+      return {
+        swim: ((average.swim - goalPaceSwim) / goalPaceSwim) * 100,
+        bike: ((average.bike - goalPaceBike) / goalPaceBike) * 100,
+        run: ((average.run - goalPaceRun) / goalPaceRun) * 100
+      };
+    };
+  
+    this.differencePace_03 = calculateDifference(this.averagePace_03, this.goal_result);
+    this.differencePace_05 = calculateDifference(this.averagePace_05, this.goal_result);
+  }  
 }
 
 class TriathlonGoal

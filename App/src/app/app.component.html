@@ -217,9 +217,7 @@
                                     <h4 class="m-0 p-0">Previous 3</h4>
                                 </div>
                                 <div class="card-statistc py-3 px-4">
-                                    <li *ngFor="let percentage of previous_03_percentages">
-                                        {{ isInvalidPercentage(percentage) ? 'N/A' : (percentage | number: '1.2-2') + '%' }}
-                                    </li>
+                                    <p>Performance Difference: {{ differencePace_03.swim | number: '1.2-2' }}% (Swim), {{ differencePace_03.bike | number: '1.2-2' }}% (Bike), {{ differencePace_03.run | number: '1.2-2' }}% (Run)</p>
                                     + 18%
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
@@ -233,9 +231,6 @@
                                     <h4 class="m-0 p-0">Previous 5</h4> 
                                 </div>
                                 <div class="card-statistc py-3 px-4">
-                                    <li *ngFor="let percentage of previous_05_percentages">
-                                        {{ isInvalidPercentage(percentage) ? 'N/A' : (percentage | number: '1.2-2') + '%' }}
-                                    </li>
                                     - 8% 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z"/>
@@ -249,6 +244,7 @@
                                     <h4 class="m-0 p-0">Present-Goal</h4>
                                 </div>
                                 <div class="card-statistc py-3 px-4">
+                                    <p>Performance Difference: {{ differencePace_05.swim | number: '1.2-2' }}% (Swim), {{ differencePace_05.bike | number: '1.2-2' }}% (Bike), {{ differencePace_05.run | number: '1.2-2' }}% (Run)</p>
                                     - 8% 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z"/>
