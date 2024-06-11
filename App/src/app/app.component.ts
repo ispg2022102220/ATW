@@ -27,6 +27,7 @@ export class AppComponent
   run_pace : TriathlonPace[] = [new TriathlonPace(0)];
 
   total_time : TriathlonTime = new TriathlonTime(0,0,0);
+  
   goal_result : TriathlonGoal = new TriathlonGoal(
     new TriathlonDistance(0,0,0), 
     {swim: new TriathlonTime(0,0,0), run: new TriathlonTime(0,0,0), bike: new TriathlonTime(0,0,0)}, 
