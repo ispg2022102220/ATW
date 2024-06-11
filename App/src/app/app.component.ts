@@ -528,7 +528,7 @@ export class AppComponent
   calculatePercentages()
   {
     const calculatePercentage = (goal: TriathlonGoal, records: Array<TriathlonGoal>) =>
-      {
+    {
       const totalDistance = goal.distance.swim + goal.distance.bike + goal.distance.run;
 
       if (totalDistance === 0)
