@@ -52,14 +52,14 @@ export class AppComponent
   previous_03: TriathlonGoal[] = this.getPreviousThreeRecords();
   previous_05: TriathlonGoal[] = this.getPreviousFiveRecords();
 
-  averagePrevious03: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
+  averageTimePrevious03: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
   {
     swim: {hour: 0, minute: 0, second: 0},
     bike: {hour: 0, minute: 0, second: 0},
     run: {hour: 0, minute: 0, second: 0}
   };
 
-  averagePrevious05: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
+  averageTimePrevious05: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
   {
     swim: {hour: 0, minute: 0, second: 0},
     bike: {hour: 0, minute: 0, second: 0},
@@ -161,27 +161,27 @@ export class AppComponent
     {
       if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02)
       {
-        this.averagePrevious03 = this.calculateAverageTime(this.previous_03);
-        this.averagePrevious05 = this.calculateAverageTime(this.previous_05);
+        this.averageTimePrevious03 = this.calculateAverageTime(this.previous_03);
+        this.averageTimePrevious05 = this.calculateAverageTime(this.previous_05);
 
         this.averagePacePrevious03 = this.calculateAveragePace(this.previous_03);
         this.averagePacePrevious05 = this.calculateAveragePace(this.previous_05);
 
-        console.log("Comparação com média dos três registros anteriores:");
-        console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averagePrevious03.swim)}%`);
-        console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averagePrevious03.bike)}%`);
-        console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averagePrevious03.run)}%`);
-        console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious03.swim)}%`);
-        console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious03.bike)}%`);
-        console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious03.run)}%`);
+        // console.log("Comparação com média dos três registros anteriores:");
+        // console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averageTimePrevious03.swim)}%`);
+        // console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averageTimePrevious03.bike)}%`);
+        // console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averageTimePrevious03.run)}%`);
+        // console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious03.swim)}%`);
+        // console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious03.bike)}%`);
+        // console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious03.run)}%`);
 
-        console.log("Comparação com média dos cinco registros anteriores:");
-        console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averagePrevious05.swim)}%`);
-        console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averagePrevious05.bike)}%`);
-        console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averagePrevious05.run)}%`);
-        console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious05.swim)}%`);
-        console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious05.bike)}%`);
-        console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious05.run)}%`);
+        // console.log("Comparação com média dos cinco registros anteriores:");
+        // console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averageTimePrevious05.swim)}%`);
+        // console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averageTimePrevious05.bike)}%`);
+        // console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averageTimePrevious05.run)}%`);
+        // console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious05.swim)}%`);
+        // console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious05.bike)}%`);
+        // console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious05.run)}%`);
 
         this.showFeedback = !this.showFeedback;
       }
