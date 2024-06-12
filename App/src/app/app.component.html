@@ -176,15 +176,16 @@
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
-                <button (click)="setGoal();" class="btn btn-primary p-2 mt-4 button-submit">Set Goal</button>
-                <button *ngIf="!showFeedback" class="btn btn-primary p-2 mt-4 button-submit" (click)="toggleFeedback();">Get Feedback</button>
-                <button *ngIf="showFeedback" class="btn btn-primary p-2 mt-4 button-submit" (click)="toggleFeedback();">Close Feedback</button>
+                <button *ngIf="!saveGoal" (click)="setGoal();" class="p-2 mt-4 button-submit rounded-2">Set Goal</button>
+                <button *ngIf="saveGoal" (click)="removeGoal();" class="p-2 mt-4 button-submit rounded-2">Remove Goal</button>
+                <button *ngIf="!showFeedback" class="p-2 mt-4 button-submit rounded-2" (click)="toggleFeedback();">Get Feedback</button>
+                <button *ngIf="showFeedback" class="p-2 mt-4 button-submit rounded-2" (click)="toggleFeedback();">Close Feedback</button>
             </div> 
         </div>
     </div>
 
     <div *ngIf="showWarning">
-        <div class="container px-3 py-3 bg-danger rounded-2 mt-4 mb-5 warning">
+        <div class="container px-3 py-3 rounded-2 mt-4 mb-5 warning">
             <ul class="m-0">
                 <li>
                     <p class="m-0 p-0"><strong>Sprint Triathlon: Total time cutoff around 4 hours</strong></p>
@@ -202,14 +203,223 @@
         </div>
     </div>
 
-    <div *ngIf="showFeedback">
+    <!-- <div *ngIf="showFeedback"> -->
         <div class="container my-5 p-0 d-flex justify-content-between align-items-center">
             <div class="info-container-xl p-4 rounded-2">
                 <div class="text-center title p-2 rounded-2">
-                    <h3 class="p-0 m-0">Time & Pace</h3>
+                    <h3 class="p-0 m-0">Analytics</h3>
+                </div>
+                <div class="feedback-container my-4">
+                    <div class="statistics-container">
+                        <div class="badge-statistc">
+                            <div>
+                                <div class="card-statistc-title p-2">
+                                    <h4 class="m-0 p-0">Previous 3</h4>
+                                </div>
+                                <div class="card-statistc py-3 px-4">
+                                    + 18%
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="badge-statistc" *ngIf="goal_result['distance'].bike == 0">
+                            <div>
+                                <div class="card-statistc-title p-2">
+                                    <h4 class="m-0 p-0">Previous 5</h4> 
+                                </div>
+                                <div class="card-statistc py-3 px-4">
+                                    - 8% 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="badge-statistc" *ngIf="goal_result['distance'].bike != 0">
+                            <div>
+                                <div class="card-statistc-title p-2">
+                                    <h4 class="m-0 p-0">Present-Goal</h4>
+                                </div>
+                                <div class="card-statistc py-3 px-4">
+                                    - 8% 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M14 13.5a.5.5 0 0 1-.5.5h-6a.5.5 0 0 1 0-1h4.793L2.146 2.854a.5.5 0 1 1 .708-.708L13 12.293V7.5a.5.5 0 0 1 1 0z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-container" *ngIf="goal_result['distance'].bike != 0">
+                        <div class="list-goal">
+                            <h4 class="text-center title-list mb-0 p-2">Goal</h4>
+                            <div class="info-list-container p-3">
+                                <div>
+                                    <h5>Distance:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: <br>{{goal_result['distance']['swim']}} meters
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: <br>{{goal_result['distance']['bike']}} meters
+                                        </li>
+                                        <li>
+                                            Run: <br>{{goal_result['distance']['run']}} meters
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Time:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{goal_result['time']['swim']['hour']}} h : {{goal_result['time']['swim']['minute']}} m : {{goal_result['time']['swim']['second']}} s</span>
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{goal_result['time']['bike']['hour']}} h : {{goal_result['time']['bike']['minute']}} m : {{goal_result['time']['bike']['second']}} s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{goal_result['time']['run']['hour']}} h : {{goal_result['time']['run']['minute']}} m : {{goal_result['time']['run']['second']}} s</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Pace:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{goal_result['pace']['swim']['minute']}} m : {{goal_result['pace']['swim']['second']}} s</span>
+                                            <br>(/ 50 meters)
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{goal_result['pace']['bike']['speed']}} m/s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{goal_result['pace']['run']['speed']}} m/s</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list-goal mt-3">
+                            <h4 class="text-center title-list mb-0 p-2">Previous 3</h4>
+                            <div class="info-list-container-previous p-3" [class.last]="object == previous_03[previous_03.length - 1]" *ngFor="let object of previous_03">
+                                <div>
+                                    <h5>Distance:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: <br>{{object['distance']['swim']}} meters
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: <br>{{object['distance']['bike']}} meters
+                                        </li>
+                                        <li>
+                                            Run: <br>{{object['distance']['run']}} meters
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Time:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{object['time']['swim']['hour']}} h : {{object['time']['swim']['minute']}} m : {{object['time']['swim']['second']}} s</span>
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{object['time']['bike']['hour']}} h : {{object['time']['bike']['minute']}} m : {{object['time']['bike']['second']}} s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{object['time']['run']['hour']}} h : {{object['time']['run']['minute']}} m : {{object['time']['run']['second']}} s</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Pace:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{object['pace']['swim']['minute']}} m : {{object['pace']['swim']['second']}} s</span>
+                                            <br>(/ 50 meters)
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{object['pace']['bike']['speed']}} m/s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{object['pace']['run']['speed']}} m/s</span>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-container" *ngIf="goal_result['distance'].bike == 0">
+                        <div class="list-goal">
+                            <h4 class="text-center title-list mb-0 p-2">Previous 5</h4>
+                            <div class="info-list-container-previous p-3" [class.last]="object == previous_05[previous_05.length - 1]" *ngFor="let object of previous_05">
+                                <div>
+                                    <h5>Distance:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: <br>{{object['distance']['swim']}} meters
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: <br>{{object['distance']['bike']}} meters
+                                        </li>
+                                        <li>
+                                            Run: <br>{{object['distance']['run']}} meters
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Time:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{object['time']['swim']['hour']}} h : {{object['time']['swim']['minute']}} m : {{object['time']['swim']['second']}} s</span>
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{object['time']['bike']['hour']}} h : {{object['time']['bike']['minute']}} m : {{object['time']['bike']['second']}} s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{object['time']['run']['hour']}} h : {{object['time']['run']['minute']}} m : {{object['time']['run']['second']}} s</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h5>Pace:</h5>
+                                    <ul class="m-0">
+                                        <li>
+                                            Swim: 
+                                            <br><span class="time-list">{{object['pace']['swim']['minute']}} m : {{object['pace']['swim']['second']}} s</span>
+                                            <br>(/ 50 meters)
+                                        </li>
+                                        <li class="my-2">
+                                            Bike: 
+                                            <br><span class="time-list">{{object['pace']['bike']['speed']}} m/s</span>
+                                        </li>
+                                        <li>
+                                            Run: 
+                                            <br><span class="time-list">{{object['pace']['run']['speed']}} m/s</span>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <!-- </div> -->
 
 </main>
