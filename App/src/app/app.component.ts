@@ -36,9 +36,6 @@ export class AppComponent
     {interval_01: new TriathlonInterval(0,0), interval_02: new TriathlonInterval(0,0)}
   );
 
-  previous_05: Array<TriathlonGoal> = this.getPreviousFiveRecords();
-  previous_03: Array<TriathlonGoal> = this.getPreviousThreeRecords();
-
   swim_distance = this.distances[0]['swim'];
   bike_distance = this.distances[0]['bike'];
   run_distance = this.distances[0]['run'];
@@ -52,22 +49,149 @@ export class AppComponent
   saveGoal = false;
   showFeedback = false;
 
-  toggleFeedback() {
+  previous_03: TriathlonGoal[] = this.getPreviousThreeRecords();
+  previous_05: TriathlonGoal[] = this.getPreviousFiveRecords();
+
+  averagePrevious03: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
+  {
+    swim: {hour: 0, minute: 0, second: 0},
+    bike: {hour: 0, minute: 0, second: 0},
+    run: {hour: 0, minute: 0, second: 0}
+  };
+
+  averagePrevious05: {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime} =
+  {
+    swim: {hour: 0, minute: 0, second: 0},
+    bike: {hour: 0, minute: 0, second: 0},
+    run: {hour: 0, minute: 0, second: 0}
+  };
+
+  averagePacePrevious03: {swim: TriathlonPace_swim, bike: TriathlonPace, run: TriathlonPace} = {
+    swim: {minute: 0, second: 0},
+    bike: {speed: 0},
+    run: {speed: 0}
+  };
+
+  averagePacePrevious05: {swim: TriathlonPace_swim, bike: TriathlonPace, run: TriathlonPace} = {
+    swim: {minute: 0, second: 0},
+    bike: {speed: 0},
+    run: {speed: 0}
+  };
+
+  calculateAverageTime(records: TriathlonGoal[]): {swim: TriathlonTime, bike: TriathlonTime, run: TriathlonTime}
+  {
+    const total = {swim: {hour: 0, minute: 0, second: 0}, bike: {hour: 0, minute: 0, second: 0}, run: {hour: 0, minute: 0, second: 0}};
+    records.forEach(record => {
+      total.swim.hour += record.time.swim.hour;
+      total.swim.minute += record.time.swim.minute;
+      total.swim.second += record.time.swim.second;
+      total.bike.hour += record.time.bike.hour;
+      total.bike.minute += record.time.bike.minute;
+      total.bike.second += record.time.bike.second;
+      total.run.hour += record.time.run.hour;
+      total.run.minute += record.time.run.minute;
+      total.run.second += record.time.run.second;
+    });
+    
+    const length = records.length;
+    return {
+      swim: { hour: total.swim.hour / length, minute: total.swim.minute / length, second: total.swim.second / length },
+      bike: { hour: total.bike.hour / length, minute: total.bike.minute / length, second: total.bike.second / length },
+      run: { hour: total.run.hour / length, minute: total.run.minute / length, second: total.run.second / length }
+    };
+  }
+
+  calculateAveragePace(records: TriathlonGoal[]): {swim: TriathlonPace_swim, bike: TriathlonPace, run: TriathlonPace}
+  {
+    const total = {swim: {minute: 0, second: 0}, bike: {speed: 0}, run: {speed: 0}};
+    records.forEach(record =>
+    {
+      total.swim.minute += record.pace.swim.minute;
+      total.swim.second += record.pace.swim.second;
+      total.bike.speed += record.pace.bike.speed;
+      total.run.speed += record.pace.run.speed;
+    });
+
+    const length = records.length;
+    return {
+      swim: {minute: total.swim.minute / length, second: total.swim.second / length},
+      bike: {speed: total.bike.speed / length},
+      run: {speed: total.run.speed / length}
+    };
+  }
+
+  calculateTimePercentageDifference(currentTime: TriathlonTime, averageTime: TriathlonTime): string
+  {
+    const currentTotalSeconds = currentTime.hour * 3600 + currentTime.minute * 60 + currentTime.second;
+    const averageTotalSeconds = averageTime.hour * 3600 + averageTime.minute * 60 + averageTime.second;
+    const difference = ((currentTotalSeconds - averageTotalSeconds) / averageTotalSeconds) * 100;
+
+    return difference.toFixed(2);
+  }
+
+  calculatePacePercentageDifference(currentPace: TriathlonPace | TriathlonPace_swim, averagePace: TriathlonPace | TriathlonPace_swim): string
+  {
+    if ('speed' in currentPace && 'speed' in averagePace)
+    {
+      const difference = ((currentPace.speed - averagePace.speed) / averagePace.speed) * 100;
+
+      return difference.toFixed(2);
+    }
+    else if ('minute' in currentPace && 'minute' in averagePace)
+    {
+      const currentTotalSeconds = currentPace.minute * 60 + currentPace.second;
+      const averageTotalSeconds = averagePace.minute * 60 + averagePace.second;
+      const difference = ((currentTotalSeconds - averageTotalSeconds) / averageTotalSeconds) * 100;
+
+      return difference.toFixed(2);
+    }
+
+    return '0.00';
+  }
+  
+  toggleFeedback()
+  {
     const swim_seconds = this.swim_time[0].hour * 3600 + this.swim_time[0].minute * 60 + this.swim_time[0].second > 0;
     const bike_seconds = this.bike_time[0].hour * 3600 + this.bike_time[0].minute * 60 + this.bike_time[0].second > 0;
     const run_seconds = this.run_time[0].hour * 3600 + this.run_time[0].minute * 60 + this.run_time[0].second > 0;
     const interval_01 = this.interval_01[0]['minute'] * 60 + this.interval_01[0]['second'] > 0;
     const interval_02 = this.interval_02[0]['minute'] * 60 + this.interval_02[0]['second'] > 0;
 
-    if (!this.showFeedback) {
-      if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02) {
+    if (!this.showFeedback)
+    {
+      if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02)
+      {
+        this.averagePrevious03 = this.calculateAverageTime(this.previous_03);
+        this.averagePrevious05 = this.calculateAverageTime(this.previous_05);
+
+        this.averagePacePrevious03 = this.calculateAveragePace(this.previous_03);
+        this.averagePacePrevious05 = this.calculateAveragePace(this.previous_05);
+
+        console.log("Comparação com média dos três registros anteriores:");
+        console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averagePrevious03.swim)}%`);
+        console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averagePrevious03.bike)}%`);
+        console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averagePrevious03.run)}%`);
+        console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious03.swim)}%`);
+        console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious03.bike)}%`);
+        console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious03.run)}%`);
+
+        console.log("Comparação com média dos cinco registros anteriores:");
+        console.log(`Tempo de Natação: ${this.calculateTimePercentageDifference(this.swim_time[0], this.averagePrevious05.swim)}%`);
+        console.log(`Tempo de Ciclismo: ${this.calculateTimePercentageDifference(this.bike_time[0], this.averagePrevious05.bike)}%`);
+        console.log(`Tempo de Corrida: ${this.calculateTimePercentageDifference(this.run_time[0], this.averagePrevious05.run)}%`);
+        console.log(`Ritmo de Natação: ${this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious05.swim)}%`);
+        console.log(`Ritmo de Ciclismo: ${this.calculatePacePercentageDifference({ speed: this.bike_pace[0].speed }, this.averagePacePrevious05.bike)}%`);
+        console.log(`Ritmo de Corrida: ${this.calculatePacePercentageDifference({ speed: this.run_pace[0].speed }, this.averagePacePrevious05.run)}%`);
+
         this.showFeedback = !this.showFeedback;
       }
-    } else {
+    }
+    else
+    {
       this.showFeedback = !this.showFeedback;
     }
   }
-  
+
   toggleWarning() {
     this.showWarning = !this.showWarning;
   }
@@ -114,88 +238,78 @@ export class AppComponent
   }
 
   //Adicionar a lista dos ultimos 5 com unshift para adicionar no inicio
-  getPreviousFiveRecords() {
-
+  getPreviousFiveRecords()
+  {
     const recorde_01 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 25, 30), bike: new TriathlonTime(1, 15, 0), run: new TriathlonTime(0, 45, 0)},
+      {swim: new TriathlonPace_swim(1, 30), bike: new TriathlonPace(25), run: new TriathlonPace(5)},
+      new TriathlonTime(2, 25, 30),
+      {interval_01: new TriathlonTime(0, 5, 0), interval_02: new TriathlonTime(0, 3, 0)}
     );
 
     const recorde_02 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 26, 0), bike: new TriathlonTime(1, 20, 0), run: new TriathlonTime(0, 50, 0)},
+      {swim: new TriathlonPace_swim(1, 32), bike: new TriathlonPace(24), run: new TriathlonPace(5.5)},
+      new TriathlonTime(2, 30, 0),
+      {interval_01: new TriathlonTime(0, 5, 30), interval_02: new TriathlonTime(0, 3, 30)}
     );
 
     const recorde_03 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 24, 0), bike: new TriathlonTime(1, 10, 0), run: new TriathlonTime(0, 40, 0)},
+      {swim: new TriathlonPace_swim(1, 28), bike: new TriathlonPace(26), run: new TriathlonPace(4.5)},
+      new TriathlonTime(2, 14, 0),
+      {interval_01: new TriathlonTime(0, 4, 30), interval_02: new TriathlonTime(0, 2, 30)}
     );
 
     const recorde_04 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 27, 0), bike: new TriathlonTime(1, 22, 0), run: new TriathlonTime(0, 55, 0)},
+      {swim: new TriathlonPace_swim(1, 35), bike: new TriathlonPace(23), run: new TriathlonPace(6)},
+      new TriathlonTime(2, 44, 0),
+      {interval_01: new TriathlonTime(0, 6, 0), interval_02: new TriathlonTime(0, 3, 30)}
     );
 
     const recorde_05 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 25, 0), bike: new TriathlonTime(1, 17, 0), run: new TriathlonTime(0, 47, 0)},
+      {swim: new TriathlonPace_swim(1, 29), bike: new TriathlonPace(24.5), run: new TriathlonPace(5.2)},
+      new TriathlonTime(2, 29, 0),
+      {interval_01: new TriathlonTime(0, 5, 15), interval_02: new TriathlonTime(0, 3, 45)}
     );
 
-    const arr: Array<TriathlonGoal> = [];
-    arr.unshift(recorde_05);
-    arr.unshift(recorde_04);
-    arr.unshift(recorde_03);
-    arr.unshift(recorde_02);
-    arr.unshift(recorde_01);
-    return arr;
+    return [recorde_05, recorde_04, recorde_03, recorde_02, recorde_01];
   }
 
-  getPreviousThreeRecords() {
-
+  getPreviousThreeRecords()
+  {
     const recorde_01 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 25, 30), bike: new TriathlonTime(1, 15, 0), run: new TriathlonTime(0, 45, 0)},
+      {swim: new TriathlonPace_swim(1, 30), bike: new TriathlonPace(25), run: new TriathlonPace(5)},
+      new TriathlonTime(2, 25, 30),
+      {interval_01: new TriathlonTime(0, 5, 0), interval_02: new TriathlonTime(0, 3, 0)}
     );
 
     const recorde_02 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 26, 0), bike: new TriathlonTime(1, 20, 0), run: new TriathlonTime(0, 50, 0)},
+      {swim: new TriathlonPace_swim(1, 32), bike: new TriathlonPace(24), run: new TriathlonPace(5.5)},
+      new TriathlonTime(2, 30, 0),
+      {interval_01: new TriathlonTime(0, 5, 30), interval_02: new TriathlonTime(0, 3, 30)}
     );
 
     const recorde_03 = this.setRecord(
-      new TriathlonDistance(0,0,0),
-      {swim: new TriathlonTime(0,0,0),bike: new TriathlonTime(0,0,0),run: new TriathlonTime(0,0,0)},
-      {swim: new TriathlonPace_swim(0,0), bike: new TriathlonPace(0), run: new TriathlonPace(0)},
-      new TriathlonTime(0,0,0),
-      {interval_01: new TriathlonTime(0,0,0), interval_02: new TriathlonTime(0,0,0)},
+      new TriathlonDistance(1500, 40, 10),
+      {swim: new TriathlonTime(0, 24, 0), bike: new TriathlonTime(1, 10, 0), run: new TriathlonTime(0, 40, 0)},
+      {swim: new TriathlonPace_swim(1, 28), bike: new TriathlonPace(26), run: new TriathlonPace(4.5)},
+      new TriathlonTime(2, 14, 0),
+      {interval_01: new TriathlonTime(0, 4, 30), interval_02: new TriathlonTime(0, 2, 30)}
     );
 
-    const arr: Array<TriathlonGoal> = [];
-    arr.unshift(recorde_03);
-    arr.unshift(recorde_02);
-    arr.unshift(recorde_01);
-    return arr;
+    return [recorde_03, recorde_02, recorde_01];
   }
 
   setRecord(distance : TriathlonDistance, 
