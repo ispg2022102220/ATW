@@ -13,6 +13,8 @@ import { CommonModule } from '@angular/common';
 
 export class AppComponent  
 {
+  errors: string[] = [];
+
   distances : TriathlonDistance[] = [new TriathlonDistance(0,0,0)];
 
   swim_time : TriathlonTime[] = [new TriathlonTime(0,0,0)];
@@ -473,6 +475,83 @@ export class AppComponent
 
   valueChange()
   {
+    this.errors['length'] = 0;
+
+    // Sprint
+    if ( this.distances[0]['swim'] === 750 && this.distances[0]['bike'] === 20000 && this.distances[0]['run'] === 5000 )
+    {
+      if ( ( this.swim_time[0]['hour'] > 0 ) || ( (this.swim_time[0]['minute'] > 30) || ( (this.swim_time[0]['minute'] == 30) && (this.swim_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de swim máximo");
+      }
+
+      if ( ( this.bike_time[0]['hour'] > 2 ) || ( this.bike_time[0]['hour'] == 2 && (this.bike_time[0]['minute'] > 0 || this.bike_time[0]['second'] > 0) ) )
+      {
+        this.errors.push("tempo de bike máximo");
+      }
+
+      if ( ( this.run_time[0]['hour'] > 3) || ( this.run_time[0]['hour'] == 3 && (this.run_time[0]['minute'] > 0 || this.run_time[0]['second'] > 0) ) )
+      {
+        this.errors.push("tempo de run máximo");
+      }
+    }
+
+    // Olympic
+    if ( this.distances[0]['swim'] === 1500 && this.distances[0]['bike'] === 40000 && this.distances[0]['run'] === 10000 )
+    {
+      if ( (this.swim_time[0]['hour'] > 1) || ( this.swim_time[0]['hour'] == 1 && (this.swim_time[0]['minute'] > 0 || this.swim_time[0]['second'] > 0) ) )
+      {
+        this.errors.push("tempo de swim máximo");
+      }
+   
+      if ( (this.bike_time[0]['hour'] > 3) || ( this.bike_time[0]['hour'] == 3 && (this.bike_time[0]['minute'] > 15 || (this.bike_time[0]['minute'] == 15 && this.bike_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de bike máximo");
+      }
+
+      if ( (this.run_time[0]['hour'] > 4) || ( this.run_time[0]['hour'] == 4 && (this.run_time[0]['minute'] > 30 || (this.run_time[0]['minute'] == 30 && this.run_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de corrida máximo");
+      }
+    }
+
+    // Half-Ironman
+    if ( this.distances[0]['swim'] === 1900 && this.distances[0]['bike'] === 90000 && this.distances[0]['run'] === 21100 )
+    {
+      if ( (this.swim_time[0]['hour'] > 1) || ( this.swim_time[0]['hour'] == 1 && (this.swim_time[0]['minute'] > 10 || (this.swim_time[0]['minute'] == 10 && this.swim_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de swim máximo");
+      }
+
+      if ( (this.bike_time[0]['hour'] > 5) || ( this.bike_time[0]['hour'] == 5 && (this.bike_time[0]['minute'] > 30 || (this.bike_time[0]['minute'] == 30 && this.bike_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de bike máximo");
+      }
+
+      if ( (this.run_time[0]['hour'] > 8) || ( this.run_time[0]['hour'] == 8 && (this.run_time[0]['minute'] > 30 || (this.run_time[0]['minute'] == 30 && this.run_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de corrida máximo");
+      }
+    }
+
+    // Ironman
+    if ( this.distances[0]['swim'] === 3800 && this.distances[0]['bike'] === 180000 && this.distances[0]['run'] === 42195 )
+    {
+      if ( this.swim_time[0]['hour'] > 2 || ( this.swim_time[0]['hour'] == 2 && (this.swim_time[0]['minute'] > 20 || (this.swim_time[0]['minute'] == 20 && this.swim_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de swim máximo");
+      }
+
+      if ( this.bike_time[0]['hour'] > 10 || ( this.bike_time[0]['hour'] == 10 && (this.bike_time[0]['minute'] > 30 || (this.bike_time[0]['minute'] == 30 && this.bike_time[0]['second'] > 0) ) ) )
+      {
+        this.errors.push("tempo de bike máximo");
+      }
+
+      if ( this.run_time[0]['hour'] > 17 || ( this.run_time[0]['hour'] == 17 && (this.run_time[0]['minute'] > 0 || this.run_time[0]['second'] > 0) ) )
+      {
+        this.errors.push("tempo de corrida máximo");
+      }
+    }
     this.checkAndSetDefault_interval(this.interval_01);
     this.checkAndSetDefault_interval(this.interval_02);
 
@@ -665,6 +744,8 @@ export class AppComponent
     this.update_swim_pace();
     this.update_bike_pace();
     this.update_run_pace();
+
+    this.valueChange();
   }
 }
 

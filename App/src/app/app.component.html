@@ -175,6 +175,11 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-between align-items-center mt-3" *ngIf="errors.length > 0">
+                <ul>
+                    <li *ngFor="let error of errors" style="color: red;">{{ error }}</li>
+                </ul>
+            </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <button *ngIf="!saveGoal" (click)="setGoal();" class="p-2 mt-4 button-submit rounded-2">Set Goal</button>
                 <button *ngIf="saveGoal" (click)="removeGoal();" class="p-2 mt-4 button-submit rounded-2">Remove Goal</button>
@@ -186,19 +191,29 @@
 
     <div *ngIf="showWarning">
         <div class="container px-3 py-3 rounded-2 mt-4 mb-5 warning">
-            <ul class="m-0">
-                <li>
-                    <p class="m-0 p-0"><strong>Sprint Triathlon: Total time cutoff around 4 hours</strong></p>
-                </li>
-                <li>
-                    <p class="m-0 p-0"><strong>Olympic Triathlon: Total time cutoff around 4 hours</strong></p>
-                </li>
-                <li>
-                    <p class="m-0 p-0"><strong>Half Ironman: Swim cutoff around 1 hour 10 minutes, bike cutoff around 5 hours 30 minutes (total), run cutoff around 8 hours 30 minutes (total)</strong></p>
-                </li>
-                <li>
-                    <p class="m-0 p-0"><strong>Ironman: Swim cutoff around 2 hours 20 minutes, bike cutoff around 10 hours 30 minutes (total), run cutoff around 17 hours (total)</strong></p>
-                </li>
+            <p class="m-0 p-0"> <strong> Sprint Triathlon: </strong> </p>
+            <ul>
+                <li> <strong> Swim </strong> - 30 minutes after start </li>
+                <li> <strong> Bike </strong> - 2 hours after start </li>
+                <li> <strong> Run </strong> - 3 hours after start </li>
+            </ul>
+            <p class="m-0 p-0"> <strong> Olympic Triathlon: </strong> </p>
+            <ul>
+                <li> <strong> Swim </strong> - 1 hour after start </li>
+                <li> <strong> Bike </strong> - 3 hours, 15 minutes after start </li>
+                <li> <strong> Run </strong> - 4 hours, 30 minutes after start </li>
+            </ul>
+            <p class="m-0 p-0"> <strong> Half-Ironman Triathlon: </strong> </p>
+            <ul>
+                <li> <strong> Swim </strong> - 1 hour, 10 minutes after start </li>
+                <li> <strong> Bike </strong> - 5 hours, 30 minutes after start </li>
+                <li> <strong> Run </strong> - 8 hours, 30 minutes after start </li>
+            </ul>
+            <p class="m-0 p-0"> <strong> Ironman Triathlon: </strong> </p>
+            <ul>
+                <li> <strong> Swim </strong> - 2 hours, 20 minutes after start </li>
+                <li> <strong> Bike </strong> - 10 hours, 30 minutes after start </li>
+                <li> <strong> Run </strong> - 17 hours after start </li>
             </ul>
         </div>
     </div>
