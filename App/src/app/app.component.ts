@@ -477,6 +477,24 @@ export class AppComponent
   {
     this.errors['length'] = 0;
 
+    // Hours
+    if ( ( this.swim_time[0]['hour'] < 0 ) || ( this.bike_time[0]['hour'] < 0 ) || ( this.run_time[0]['hour'] < 0 ) )
+    {
+      this.errors.push("Horas inválidas!");
+    }
+
+    // Minutes
+    if ( ( this.swim_time[0]['minute'] > 59 || this.swim_time[0]['minute'] < 0 ) || ( this.bike_time[0]['minute'] > 59 || this.bike_time[0]['minute'] < 0 ) || ( this.run_time[0]['minute'] > 59 || this.run_time[0]['minute'] < 0 ) )
+    {
+      this.errors.push("Minutos inválidos!");
+    }
+
+    // Seconds
+    if ( ( this.swim_time[0]['second'] > 59 || this.swim_time[0]['second'] < 0 ) || ( this.bike_time[0]['second'] > 59 || this.bike_time[0]['second'] < 0 ) || ( this.run_time[0]['second'] > 59 || this.run_time[0]['second'] < 0 ) || ( this.interval_01[0]['second'] < 0 || this.interval_01[0]['second'] > 59 ) || ( this.interval_02[0]['second'] < 0 || this.interval_02[0]['second'] > 59 ) )
+    {
+      this.errors.push("Segundos inválidos!");
+    }
+
     // Sprint
     if ( this.distances[0]['swim'] === 750 && this.distances[0]['bike'] === 20000 && this.distances[0]['run'] === 5000 )
     {

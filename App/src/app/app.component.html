@@ -282,62 +282,45 @@
                                                 </ng-template>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                <h5> Average </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <h5> Time </h5>
-                                            </td>
-                                            <td>
-                                                <h5> Pace </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-life-preserver me-2" viewBox="0 0 16 16">
-                                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m6.43-5.228a7.03 7.03 0 0 1-3.658 3.658l-1.115-2.788a4 4 0 0 0 1.985-1.985zM5.228 14.43a7.03 7.03 0 0 1-3.658-3.658l2.788-1.115a4 4 0 0 0 1.985 1.985zm9.202-9.202-2.788 1.115a4 4 0 0 0-1.985-1.985l1.115-2.788a7.03 7.03 0 0 1 3.658 3.658m-8.087-.87a4 4 0 0 0-1.985 1.985L1.57 5.228A7.03 7.03 0 0 1 5.228 1.57zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious03['swim']['hour'] }} h {{ averageTimePrevious03['swim']['minute'] }} m {{ averageTimePrevious03['swim']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious03['swim']['minute'] }} m {{ averagePacePrevious03['swim']['second'] }} s ( / 50 meters )
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
-                                                    <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious03['bike']['hour'] }} h {{ averageTimePrevious03['bike']['minute'] }} m {{ averageTimePrevious03['bike']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious03['bike']['speed'] }} m/s
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
-                                                    <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
-                                                    <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious03['run']['hour'] }} h {{ averageTimePrevious03['run']['minute'] }} m {{ averageTimePrevious03['run']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious03['run']['speed'] }} m/s
-                                            </td>
-                                        </tr>
+                                    </table>
+                                    <h5> Average </h5>
+                                    <div class="info-list-container-previous p-3 text-start">
+                                        <div>
+                                            <h5>Time:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious03['swim']['hour'] }} h {{ averageTimePrevious03['swim']['minute'] }} m {{ averageTimePrevious03['swim']['second'] }} s </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious03['bike']['hour'] }} h {{ averageTimePrevious03['bike']['minute'] }} m {{ averageTimePrevious03['bike']['second'] }} s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious03['run']['hour'] }} h {{ averageTimePrevious03['run']['minute'] }} m {{ averageTimePrevious03['run']['second'] }} s </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5>Pace:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious03['swim']['minute'] }} m {{ averagePacePrevious03['swim']['second'] }} s ( / 50m ) </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious03['bike']['speed'] }} m/s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious03['run']['speed'] }} m/s </span>
+                                                </li>
+                                            </ul>
+                                        </div> 
+                                    </div>
+                                    <table style="width: 100%;">
                                         <tr>
                                             <td colspan="3">
                                                 <h5> Percentage Difference </h5>
@@ -454,62 +437,45 @@
                                                 </ng-template>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                <h5> Average </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <h5> Time </h5>
-                                            </td>
-                                            <td>
-                                                <h5> Pace </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-life-preserver me-2" viewBox="0 0 16 16">
-                                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m6.43-5.228a7.03 7.03 0 0 1-3.658 3.658l-1.115-2.788a4 4 0 0 0 1.985-1.985zM5.228 14.43a7.03 7.03 0 0 1-3.658-3.658l2.788-1.115a4 4 0 0 0 1.985 1.985zm9.202-9.202-2.788 1.115a4 4 0 0 0-1.985-1.985l1.115-2.788a7.03 7.03 0 0 1 3.658 3.658m-8.087-.87a4 4 0 0 0-1.985 1.985L1.57 5.228A7.03 7.03 0 0 1 5.228 1.57zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious05['swim']['hour'] }} h {{ averageTimePrevious05['swim']['minute'] }} m {{ averageTimePrevious05['swim']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious05['swim']['minute'] }} m {{ averagePacePrevious05['swim']['second'] }} s ( / 50 meters )
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
-                                                    <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious05['bike']['hour'] }} h {{ averageTimePrevious05['bike']['minute'] }} m {{ averageTimePrevious05['bike']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious05['bike']['speed'] }} m/s
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
-                                                    <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
-                                                    <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimePrevious05['run']['hour'] }} h {{ averageTimePrevious05['run']['minute'] }} m {{ averageTimePrevious05['run']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePacePrevious05['run']['speed'] }} m/s
-                                            </td>
-                                        </tr>
+                                    </table>
+                                    <h5> Average </h5>
+                                    <div class="info-list-container-previous p-3 text-start">
+                                        <div>
+                                            <h5>Time:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious05['swim']['hour'] }} h {{ averageTimePrevious05['swim']['minute'] }} m {{ averageTimePrevious05['swim']['second'] }} s </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious05['bike']['hour'] }} h {{ averageTimePrevious05['bike']['minute'] }} m {{ averageTimePrevious05['bike']['second'] }} s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averageTimePrevious05['run']['hour'] }} h {{ averageTimePrevious05['run']['minute'] }} m {{ averageTimePrevious05['run']['second'] }} s </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5>Pace:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious05['swim']['minute'] }} m {{ averagePacePrevious05['swim']['second'] }} s ( / 50m ) </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious05['bike']['speed'] }} m/s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averagePacePrevious05['run']['speed'] }} m/s </span>
+                                                </li>
+                                            </ul>
+                                        </div> 
+                                    </div>
+                                    <table style="width: 100%;">
                                         <tr>
                                             <td colspan="3">
                                                 <h5> Percentage Difference </h5>
@@ -626,62 +592,45 @@
                                                 </ng-template>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                <h5> Average </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-
-                                            </td>
-                                            <td>
-                                                <h5> Time </h5>
-                                            </td>
-                                            <td>
-                                                <h5> Pace </h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-life-preserver me-2" viewBox="0 0 16 16">
-                                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m6.43-5.228a7.03 7.03 0 0 1-3.658 3.658l-1.115-2.788a4 4 0 0 0 1.985-1.985zM5.228 14.43a7.03 7.03 0 0 1-3.658-3.658l2.788-1.115a4 4 0 0 0 1.985 1.985zm9.202-9.202-2.788 1.115a4 4 0 0 0-1.985-1.985l1.115-2.788a7.03 7.03 0 0 1 3.658 3.658m-8.087-.87a4 4 0 0 0-1.985 1.985L1.57 5.228A7.03 7.03 0 0 1 5.228 1.57zM8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimeGoal['swim']['hour'] }} h {{ averageTimeGoal['swim']['minute'] }} m {{ averageTimeGoal['swim']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePaceGoal['swim']['minute'] }} m {{ averagePaceGoal['swim']['second'] }} s ( / 50 meters )
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bicycle" viewBox="0 0 16 16">
-                                                    <path d="M4 4.5a.5.5 0 0 1 .5-.5H6a.5.5 0 0 1 0 1v.5h4.14l.386-1.158A.5.5 0 0 1 11 4h1a.5.5 0 0 1 0 1h-.64l-.311.935.807 1.29a3 3 0 1 1-.848.53l-.508-.812-2.076 3.322A.5.5 0 0 1 8 10.5H5.959a3 3 0 1 1-1.815-3.274L5 5.856V5h-.5a.5.5 0 0 1-.5-.5m1.5 2.443-.508.814c.5.444.85 1.054.967 1.743h1.139zM8 9.057 9.598 6.5H6.402zM4.937 9.5a2 2 0 0 0-.487-.877l-.548.877zM3.603 8.092A2 2 0 1 0 4.937 10.5H3a.5.5 0 0 1-.424-.765zm7.947.53a2 2 0 1 0 .848-.53l1.026 1.643a.5.5 0 1 1-.848.53z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimeGoal['bike']['hour'] }} h {{ averageTimeGoal['bike']['minute'] }} m {{ averageTimeGoal['bike']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePaceGoal['bike']['speed'] }} m/s
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-walking" viewBox="0 0 16 16">
-                                                    <path d="M9.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M6.44 3.752A.75.75 0 0 1 7 3.5h1.445c.742 0 1.32.643 1.243 1.38l-.43 4.083a1.8 1.8 0 0 1-.088.395l-.318.906.213.242a.8.8 0 0 1 .114.175l2 4.25a.75.75 0 1 1-1.357.638l-1.956-4.154-1.68-1.921A.75.75 0 0 1 6 8.96l.138-2.613-.435.489-.464 2.786a.75.75 0 1 1-1.48-.246l.5-3a.75.75 0 0 1 .18-.375l2-2.25Z"/>
-                                                    <path d="M6.25 11.745v-1.418l1.204 1.375.261.524a.8.8 0 0 1-.12.231l-2.5 3.25a.75.75 0 1 1-1.19-.914zm4.22-4.215-.494-.494.205-1.843.006-.067 1.124 1.124h1.44a.75.75 0 0 1 0 1.5H11a.75.75 0 0 1-.531-.22Z"/>
-                                                </svg>
-                                            </td>
-                                            <td>
-                                                {{ averageTimeGoal['run']['hour'] }} h {{ averageTimeGoal['run']['minute'] }} m {{ averageTimeGoal['run']['second'] }} s
-                                            </td>
-                                            <td>
-                                                {{ averagePaceGoal['run']['speed'] }} m/s
-                                            </td>
-                                        </tr>
+                                    </table>
+                                    <h5> Average </h5>
+                                    <div class="info-list-container-previous p-3 text-start">
+                                        <div>
+                                            <h5>Time:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averageTimeGoal['swim']['hour'] }} h {{ averageTimeGoal['swim']['minute'] }} m {{ averageTimeGoal['swim']['second'] }} s </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averageTimeGoal['bike']['hour'] }} h {{ averageTimeGoal['bike']['minute'] }} m {{ averageTimeGoal['bike']['second'] }} s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averageTimeGoal['run']['hour'] }} h {{ averageTimeGoal['run']['minute'] }} m {{ averageTimeGoal['run']['second'] }} s </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <h5>Pace:</h5>
+                                            <ul class="m-0">
+                                                <li>
+                                                    Swim: 
+                                                    <br><span class="time-list"> {{ averagePaceGoal['swim']['minute'] }} m {{ averagePaceGoal['swim']['second'] }} s ( / 50m ) </span>
+                                                </li>
+                                                <li class="my-2">
+                                                    Bike: 
+                                                    <br><span class="time-list"> {{ averagePaceGoal['bike']['speed'] }} m/s </span>
+                                                </li>
+                                                <li>
+                                                    Run: 
+                                                    <br><span class="time-list"> {{ averagePaceGoal['run']['speed'] }} m/s </span>
+                                                </li>
+                                            </ul>
+                                        </div> 
+                                    </div>
+                                    <table style="width: 100%;">
                                         <tr>
                                             <td colspan="3">
                                                 <h5> Percentage Difference </h5>
