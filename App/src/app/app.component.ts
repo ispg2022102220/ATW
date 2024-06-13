@@ -175,12 +175,7 @@ export class AppComponent
     {
       if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02)
       {
-        this.averageTimePrevious03 = this.calculateAverageTime(this.previous_03);
-        this.averagePacePrevious03 = this.calculateAveragePace(this.previous_03);
-        this.averageTimeGoal = this.calculateAverageTime([this.goal_result]);
-        this.averagePaceGoal = this.calculateAveragePace([this.goal_result]);
-        this.averageTimePrevious05 = this.calculateAverageTime(this.previous_05);
-        this.averagePacePrevious05 = this.calculateAveragePace(this.previous_05);
+        this.calculateAll();
 
         this.showFeedback = !this.showFeedback;
       }
@@ -189,6 +184,18 @@ export class AppComponent
     {
       this.showFeedback = !this.showFeedback;
     }
+  }
+
+  calculateAll()
+  {
+    this.averageTimePrevious03 = this.calculateAverageTime(this.previous_03);
+    this.averagePacePrevious03 = this.calculateAveragePace(this.previous_03);
+
+    this.averageTimePrevious05 = this.calculateAverageTime(this.previous_05);
+    this.averagePacePrevious05 = this.calculateAveragePace(this.previous_05);
+    
+    this.averageTimeGoal = this.calculateAverageTime([this.goal_result]);
+    this.averagePaceGoal = this.calculateAveragePace([this.goal_result]);
   }
 
   toggleWarning() {
@@ -371,6 +378,8 @@ export class AppComponent
       this.goal_result['pace']['run'] = runPace;
   
       this.saveGoal = !this.saveGoal;
+
+      this.calculateAll();
     }
   }
 
@@ -380,8 +389,7 @@ export class AppComponent
     this.saveGoal = !this.saveGoal;
     console.log(this.goal_result);
 
-    this.averageTimePrevious05 = this.calculateAverageTime(this.previous_05);
-    this.averagePacePrevious05 = this.calculateAveragePace(this.previous_05);
+    this.calculateAll();
   }
 
   totalTimeUpdate() {
