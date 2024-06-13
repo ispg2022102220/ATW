@@ -143,6 +143,36 @@ export class AppComponent
     return difference.toFixed(2);
   }
 
+  calculateAverageTimePercentageDifference03()
+  {
+    const swimTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.swim_time[0], this.averageTimePrevious03['swim']));
+    const bikeTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.bike_time[0], this.averageTimePrevious03['bike']));
+    const runTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.run_time[0], this.averageTimePrevious03['run']));
+
+    const total = swimTimeDifference + bikeTimeDifference + runTimeDifference;
+    return parseFloat((total / 3).toFixed(2))
+  }
+
+  calculateAverageTimePercentageDifference05()
+  {
+    const swimTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.swim_time[0], this.averageTimePrevious05['swim']));
+    const bikeTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.bike_time[0], this.averageTimePrevious05['bike']));
+    const runTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.run_time[0], this.averageTimePrevious05['run']));
+
+    const total = swimTimeDifference + bikeTimeDifference + runTimeDifference;
+    return parseFloat((total / 3).toFixed(2))
+  }
+
+  calculateAverageTimePercentageDifferenceGoal()
+  {
+    const swimTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.swim_time[0], this.averageTimeGoal['swim']));
+    const bikeTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.bike_time[0], this.averageTimeGoal['bike']));
+    const runTimeDifference = parseFloat(this.calculateTimePercentageDifference(this.run_time[0], this.averageTimeGoal['run']));
+
+    const total = swimTimeDifference + bikeTimeDifference + runTimeDifference;
+    return parseFloat((total / 3).toFixed(2))
+  }
+
   calculatePacePercentageDifference(currentPace: TriathlonPace | TriathlonPace_swim, averagePace: TriathlonPace | TriathlonPace_swim): string
   {
     if ('speed' in currentPace && 'speed' in averagePace)
@@ -161,6 +191,36 @@ export class AppComponent
     }
 
     return '0.00';
+  }
+
+  calculateAveragePacePercentageDifference03()
+  {
+    const swimPaceDifference = parseFloat(this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious03['swim']));
+    const bikePaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.bike_pace[0]['speed'] }, this.averagePacePrevious03['bike']));
+    const runPaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.run_pace[0]['speed'] }, this.averagePacePrevious03['run']));
+
+    const total = swimPaceDifference + bikePaceDifference + runPaceDifference;
+    return parseFloat((total / 3).toFixed(2))
+  }
+
+  calculateAveragePacePercentageDifference05()
+  {
+    const swimPaceDifference = parseFloat(this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePacePrevious05['swim']));
+    const bikePaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.bike_pace[0]['speed'] }, this.averagePacePrevious05['bike']));
+    const runPaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.run_pace[0]['speed'] }, this.averagePacePrevious05['run']));
+
+    const total = swimPaceDifference + bikePaceDifference + runPaceDifference;
+    return parseFloat((total / 3).toFixed(2))
+  }
+
+  calculateAveragePacePercentageDifferenceGoal()
+  {
+    const swimPaceDifference = parseFloat(this.calculatePacePercentageDifference(this.swim_pace[0], this.averagePaceGoal['swim']));
+    const bikePaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.bike_pace[0]['speed'] }, this.averagePaceGoal['bike']));
+    const runPaceDifference = parseFloat(this.calculatePacePercentageDifference({ speed: this.run_pace[0]['speed'] }, this.averagePaceGoal['run']));
+
+    const total = swimPaceDifference + bikePaceDifference + runPaceDifference;
+    return parseFloat((total / 3).toFixed(2))
   }
   
   toggleFeedback()
