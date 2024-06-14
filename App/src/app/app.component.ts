@@ -224,6 +224,34 @@ export class AppComponent
     const total = swimPaceDifference + bikePaceDifference + runPaceDifference;
     return parseFloat((total / 3).toFixed(2))
   }
+
+  calculateTimeDifference(currentTime: TriathlonTime[], averageTime: TriathlonTime): string {
+    const currentTotalSeconds = currentTime[0].hour * 3600 + currentTime[0].minute * 60 + currentTime[0].second;
+    const averageTotalSeconds = averageTime.hour * 3600 + averageTime.minute * 60 + averageTime.second;
+    const differenceInSeconds = currentTotalSeconds - averageTotalSeconds;
+
+    const hours = Math.floor(differenceInSeconds / 3600);
+    const minutes = Math.floor((differenceInSeconds % 3600) / 60);
+    const seconds = differenceInSeconds % 60;
+
+    return `${hours}h ${Math.abs(minutes).toFixed(0)}m ${Math.abs(seconds).toFixed(0)}s`;
+  }
+
+  calculatePaceDifferenceSwim(currentPace: TriathlonPace_swim[], averagePace: TriathlonPace_swim): string {
+    const currentTotalSeconds = currentPace[0].minute * 60 + currentPace[0].second;
+    const averageTotalSeconds = averagePace.minute * 60 + averagePace.second;
+    const differenceInSeconds = currentTotalSeconds - averageTotalSeconds;
+
+    const minutes = Math.floor(differenceInSeconds / 60);
+    const seconds = differenceInSeconds % 60;
+
+    return `${minutes.toFixed(0)}m ${Math.abs(seconds).toFixed(0)}s`;
+  }
+
+  calculatePaceDifference(currentPace: TriathlonPace[], averagePace: TriathlonPace): String {
+    const difference = currentPace[0].speed - averagePace.speed;
+    return `${difference.toFixed(0)} m/s`;
+  }
   
   toggleFeedback()
   {
@@ -232,20 +260,32 @@ export class AppComponent
     const run_seconds = this.run_time[0].hour * 3600 + this.run_time[0].minute * 60 + this.run_time[0].second > 0;
     const interval_01 = this.interval_01[0]['minute'] * 60 + this.interval_01[0]['second'] > 0;
     const interval_02 = this.interval_02[0]['minute'] * 60 + this.interval_02[0]['second'] > 0;
+    const distance_flag = this.distances[0]['swim'] > 0 && this.distances[0]['run'] > 0 && this.distances[0]['bike'] > 0;
 
-    if (!this.showFeedback)
-    {
-      if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02)
+     
+      if (!this.showFeedback)
       {
-        this.calculateAll();
-
+        if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02 && distance_flag)
+        {
+          if (this.errors.length > 0) {
+            this.errors.push('Please, correct the errors to set a feedback');
+          } else {
+            this.calculateAll();
+            this.showFeedback = !this.showFeedback;
+          }
+        } else {
+          if (this.errors.length = 1) {
+            this.errors.length = 0;
+            this.errors.push('All inputs must be filled');
+          } else {
+            this.errors.push('All inputs must be filled');
+          }
+        }
+      }
+      else
+      {
         this.showFeedback = !this.showFeedback;
       }
-    }
-    else
-    {
-      this.showFeedback = !this.showFeedback;
-    }
   }
 
   calculateAll()
@@ -409,39 +449,52 @@ export class AppComponent
 
     if (swim_seconds && bike_seconds && run_seconds && interval_01 && interval_02 && distance_flag)
     {
-      // Insert Interval
-      const interval1: TriathlonInterval = new TriathlonInterval(this.interval_01[0]['minute'], this.interval_01[0]['second']);
-      const interval2: TriathlonInterval = new TriathlonInterval(this.interval_02[0]['minute'], this.interval_02[0]['second']);
+      if (this.errors.length > 0) {
+        this.errors.push('Please, correct the errors to set a feedback');
+      } else {
+        // Insert Interval
+        const interval1: TriathlonInterval = new TriathlonInterval(this.interval_01[0]['minute'], this.interval_01[0]['second']);
+        const interval2: TriathlonInterval = new TriathlonInterval(this.interval_02[0]['minute'], this.interval_02[0]['second']);
 
-      this.goal_result['interval']['interval_01'] = interval1;
-      this.goal_result['interval']['interval_02'] = interval2;
+        this.goal_result['interval']['interval_01'] = interval1;
+        this.goal_result['interval']['interval_02'] = interval2;
 
-      // Insert Distance
-      this.goal_result['distance']['swim'] = this.swim_distance;
-      this.goal_result['distance']['bike'] = this.bike_distance;
-      this.goal_result['distance']['run'] = this.run_distance;
-  
-      // Insert Time
-      const swimTime: TriathlonTime = new TriathlonTime(this.swim_time[0]['hour'], this.swim_time[0]['minute'], this.swim_time[0]['second']);
-      const bikeTime: TriathlonTime = new TriathlonTime(this.bike_time[0]['hour'], this.bike_time[0]['minute'], this.bike_time[0]['second']);
-      const runTime: TriathlonTime = new TriathlonTime(this.run_time[0]['hour'], this.run_time[0]['minute'], this.run_time[0]['second']);
+        // Insert Distance
+        this.goal_result['distance']['swim'] = this.swim_distance;
+        this.goal_result['distance']['bike'] = this.bike_distance;
+        this.goal_result['distance']['run'] = this.run_distance;
+    
+        // Insert Time
+        const swimTime: TriathlonTime = new TriathlonTime(this.swim_time[0]['hour'], this.swim_time[0]['minute'], this.swim_time[0]['second']);
+        const bikeTime: TriathlonTime = new TriathlonTime(this.bike_time[0]['hour'], this.bike_time[0]['minute'], this.bike_time[0]['second']);
+        const runTime: TriathlonTime = new TriathlonTime(this.run_time[0]['hour'], this.run_time[0]['minute'], this.run_time[0]['second']);
 
-      this.goal_result['time']['swim'] = swimTime;
-      this.goal_result['time']['bike'] = bikeTime;
-      this.goal_result['time']['run'] = runTime;
+        this.goal_result['time']['swim'] = swimTime;
+        this.goal_result['time']['bike'] = bikeTime;
+        this.goal_result['time']['run'] = runTime;
 
-      // Insert Pace
-      const swimPace: TriathlonPace_swim = new TriathlonPace_swim(this.swim_pace[0]['minute'], this.swim_pace[0]['second']);
-      const bikePace: TriathlonPace = new TriathlonPace(this.bike_pace[0]['speed']);
-      const runPace: TriathlonPace = new TriathlonPace(this.run_pace[0]['speed']);
+        // Insert Pace
+        const swimPace: TriathlonPace_swim = new TriathlonPace_swim(this.swim_pace[0]['minute'], this.swim_pace[0]['second']);
+        const bikePace: TriathlonPace = new TriathlonPace(this.bike_pace[0]['speed']);
+        const runPace: TriathlonPace = new TriathlonPace(this.run_pace[0]['speed']);
 
-      this.goal_result['pace']['swim'] = swimPace;
-      this.goal_result['pace']['bike'] = bikePace;
-      this.goal_result['pace']['run'] = runPace;
-  
-      this.saveGoal = !this.saveGoal;
+        this.goal_result['pace']['swim'] = swimPace;
+        this.goal_result['pace']['bike'] = bikePace;
+        this.goal_result['pace']['run'] = runPace;
+    
+        this.saveGoal = !this.saveGoal;
 
-      this.calculateAll();
+        this.calculateAll();
+      }
+    } else {
+      if (this.errors.length >= 0) {
+        if (this.errors.length = 1) {
+          this.errors.length = 0;
+          this.errors.push('All inputs must be filled');
+        } else {
+          this.errors.push('All inputs must be filled');
+        }
+      }
     }
   }
 
@@ -480,19 +533,19 @@ export class AppComponent
     // Hours
     if ( ( this.swim_time[0]['hour'] < 0 ) || ( this.bike_time[0]['hour'] < 0 ) || ( this.run_time[0]['hour'] < 0 ) )
     {
-      this.errors.push("Horas inválidas!");
+      this.errors.push("Invalid Hour");
     }
 
     // Minutes
     if ( ( this.swim_time[0]['minute'] > 59 || this.swim_time[0]['minute'] < 0 ) || ( this.bike_time[0]['minute'] > 59 || this.bike_time[0]['minute'] < 0 ) || ( this.run_time[0]['minute'] > 59 || this.run_time[0]['minute'] < 0 ) )
     {
-      this.errors.push("Minutos inválidos!");
+      this.errors.push("Invalid minute");
     }
 
     // Seconds
     if ( ( this.swim_time[0]['second'] > 59 || this.swim_time[0]['second'] < 0 ) || ( this.bike_time[0]['second'] > 59 || this.bike_time[0]['second'] < 0 ) || ( this.run_time[0]['second'] > 59 || this.run_time[0]['second'] < 0 ) || ( this.interval_01[0]['second'] < 0 || this.interval_01[0]['second'] > 59 ) || ( this.interval_02[0]['second'] < 0 || this.interval_02[0]['second'] > 59 ) )
     {
-      this.errors.push("Segundos inválidos!");
+      this.errors.push("Invalid Second");
     }
 
     // Sprint
@@ -500,17 +553,17 @@ export class AppComponent
     {
       if ( ( this.swim_time[0]['hour'] > 0 ) || ( (this.swim_time[0]['minute'] > 30) || ( (this.swim_time[0]['minute'] == 30) && (this.swim_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de swim máximo");
+        this.errors.push("Maximum swim time exceeded");
       }
 
       if ( ( this.bike_time[0]['hour'] > 2 ) || ( this.bike_time[0]['hour'] == 2 && (this.bike_time[0]['minute'] > 0 || this.bike_time[0]['second'] > 0) ) )
       {
-        this.errors.push("tempo de bike máximo");
+        this.errors.push("Maximum bike time exceeded");
       }
 
       if ( ( this.run_time[0]['hour'] > 3) || ( this.run_time[0]['hour'] == 3 && (this.run_time[0]['minute'] > 0 || this.run_time[0]['second'] > 0) ) )
       {
-        this.errors.push("tempo de run máximo");
+        this.errors.push("Maximum run time exceeded");
       }
     }
 
@@ -519,17 +572,17 @@ export class AppComponent
     {
       if ( (this.swim_time[0]['hour'] > 1) || ( this.swim_time[0]['hour'] == 1 && (this.swim_time[0]['minute'] > 0 || this.swim_time[0]['second'] > 0) ) )
       {
-        this.errors.push("tempo de swim máximo");
+        this.errors.push("Maximum swim time exceeded");
       }
    
       if ( (this.bike_time[0]['hour'] > 3) || ( this.bike_time[0]['hour'] == 3 && (this.bike_time[0]['minute'] > 15 || (this.bike_time[0]['minute'] == 15 && this.bike_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de bike máximo");
+        this.errors.push("Maximum bike time exceeded");
       }
 
       if ( (this.run_time[0]['hour'] > 4) || ( this.run_time[0]['hour'] == 4 && (this.run_time[0]['minute'] > 30 || (this.run_time[0]['minute'] == 30 && this.run_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de corrida máximo");
+        this.errors.push("Maximum run time exceeded");
       }
     }
 
@@ -538,17 +591,17 @@ export class AppComponent
     {
       if ( (this.swim_time[0]['hour'] > 1) || ( this.swim_time[0]['hour'] == 1 && (this.swim_time[0]['minute'] > 10 || (this.swim_time[0]['minute'] == 10 && this.swim_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de swim máximo");
+        this.errors.push("Maximum swim time exceeded");
       }
 
       if ( (this.bike_time[0]['hour'] > 5) || ( this.bike_time[0]['hour'] == 5 && (this.bike_time[0]['minute'] > 30 || (this.bike_time[0]['minute'] == 30 && this.bike_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de bike máximo");
+        this.errors.push("Maximum bike time exceeded");
       }
 
       if ( (this.run_time[0]['hour'] > 8) || ( this.run_time[0]['hour'] == 8 && (this.run_time[0]['minute'] > 30 || (this.run_time[0]['minute'] == 30 && this.run_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de corrida máximo");
+        this.errors.push("Maximum run time exceeded");
       }
     }
 
@@ -557,19 +610,24 @@ export class AppComponent
     {
       if ( this.swim_time[0]['hour'] > 2 || ( this.swim_time[0]['hour'] == 2 && (this.swim_time[0]['minute'] > 20 || (this.swim_time[0]['minute'] == 20 && this.swim_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de swim máximo");
+        this.errors.push("Maximum swim time exceeded");
       }
 
       if ( this.bike_time[0]['hour'] > 10 || ( this.bike_time[0]['hour'] == 10 && (this.bike_time[0]['minute'] > 30 || (this.bike_time[0]['minute'] == 30 && this.bike_time[0]['second'] > 0) ) ) )
       {
-        this.errors.push("tempo de bike máximo");
+        this.errors.push("Maximum bike time exceeded");
       }
 
       if ( this.run_time[0]['hour'] > 17 || ( this.run_time[0]['hour'] == 17 && (this.run_time[0]['minute'] > 0 || this.run_time[0]['second'] > 0) ) )
       {
-        this.errors.push("tempo de corrida máximo");
+        this.errors.push("Maximum run time exceeded");
       }
     }
+
+    if (this.errors.length > 0) {
+      this.showFeedback = false;
+    }
+
     this.checkAndSetDefault_interval(this.interval_01);
     this.checkAndSetDefault_interval(this.interval_02);
 
@@ -584,6 +642,10 @@ export class AppComponent
     this.update_bike_pace();
     this.update_run_pace();
     this.update_swim_pace();
+
+    this.calculateAverageTimePercentageDifference05();
+    this.calculateAverageTimePercentageDifference03();
+    this.calculateAverageTimePercentageDifferenceGoal();
   }
 
   distanceChange()
