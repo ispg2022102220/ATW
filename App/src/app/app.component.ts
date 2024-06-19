@@ -111,9 +111,24 @@ export class AppComponent
     
     const length = records.length;
     return {
-      swim: { hour: total.swim.hour / length, minute: total.swim.minute / length, second: total.swim.second / length },
-      bike: { hour: total.bike.hour / length, minute: total.bike.minute / length, second: total.bike.second / length },
-      run: { hour: total.run.hour / length, minute: total.run.minute / length, second: total.run.second / length }
+      swim:
+      {
+        hour: Math.floor(total.swim.hour / length),
+        minute: Math.floor((total.swim.minute + (total.swim.second / 60)) / length),
+        second: Math.round(((total.swim.minute * 60 + total.swim.second) / length) % 60)
+      },
+      bike:
+      {
+          hour: Math.floor(total.bike.hour / length),
+          minute: Math.floor((total.bike.minute + (total.bike.second / 60)) / length),
+          second: Math.round(((total.bike.minute * 60 + total.bike.second) / length) % 60)
+      },
+      run:
+      {
+          hour: Math.floor(total.run.hour / length),
+          minute: Math.floor((total.run.minute + (total.run.second / 60)) / length),
+          second: Math.round(((total.run.minute * 60 + total.run.second) / length) % 60)
+      }
     };
   }
 
@@ -129,10 +144,28 @@ export class AppComponent
     });
 
     const length = records.length;
+
+    const averageSwimTotalSeconds = (total.swim.minute * 60 + total.swim.second) / length;
+    const averageSwimMinutes = Math.floor(averageSwimTotalSeconds / 60);
+    const averageSwimSeconds = Math.round(averageSwimTotalSeconds % 60);
+
+    const averageBikeSpeed = (total.bike.speed / length).toFixed(2);
+    const averageRunSpeed = (total.run.speed / length).toFixed(2);
+
     return {
-      swim: {minute: total.swim.minute / length, second: total.swim.second / length},
-      bike: {speed: total.bike.speed / length},
-      run: {speed: total.run.speed / length}
+        swim:
+        {
+          minute: averageSwimMinutes,
+          second: averageSwimSeconds
+        },
+        bike:
+        {
+          speed: parseFloat(averageBikeSpeed)
+        },
+        run:
+        {
+          speed: parseFloat(averageRunSpeed)
+        }
     };
   }
 
