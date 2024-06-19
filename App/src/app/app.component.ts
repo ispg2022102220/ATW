@@ -349,43 +349,43 @@ export class AppComponent
   getPreviousFiveRecords()
   {
     const recorde_01 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 25, 30), bike: new TriathlonTime(1, 15, 0), run: new TriathlonTime(0, 45, 0)},
-      {swim: new TriathlonPace_swim(1, 30), bike: new TriathlonPace(25), run: new TriathlonPace(5)},
-      new TriathlonTime(2, 25, 30),
-      {interval_01: new TriathlonTime(0, 5, 0), interval_02: new TriathlonTime(0, 3, 0)}
+      new TriathlonDistance(750, 2000, 5000),
+      {swim: new TriathlonTime(0, 30, 0), bike: new TriathlonTime(0, 40, 0), run: new TriathlonTime(0, 25, 0)},
+      {swim: new TriathlonPace_swim(2, 0), bike: new TriathlonPace(8.33), run: new TriathlonPace(3.33)},
+      new TriathlonTime(1, 40, 0),
+      {interval_01: new TriathlonTime(0, 2, 0), interval_02: new TriathlonTime(0, 3, 0)}
     );
 
     const recorde_02 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 26, 0), bike: new TriathlonTime(1, 20, 0), run: new TriathlonTime(0, 50, 0)},
-      {swim: new TriathlonPace_swim(1, 32), bike: new TriathlonPace(24), run: new TriathlonPace(5.5)},
-      new TriathlonTime(2, 30, 0),
-      {interval_01: new TriathlonTime(0, 5, 30), interval_02: new TriathlonTime(0, 3, 30)}
+      new TriathlonDistance(1500, 40000, 10000),
+      {swim: new TriathlonTime(1, 5, 0), bike: new TriathlonTime(1, 25, 0), run: new TriathlonTime(0, 55, 0)},
+      {swim: new TriathlonPace_swim(2, 10), bike: new TriathlonPace(7.84), run: new TriathlonPace(3.03)},
+      new TriathlonTime(3, 34, 19),
+      {interval_01: new TriathlonTime(0, 5, 33), interval_02: new TriathlonTime(0, 3, 46)}
     );
 
     const recorde_03 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 24, 0), bike: new TriathlonTime(1, 10, 0), run: new TriathlonTime(0, 40, 0)},
-      {swim: new TriathlonPace_swim(1, 28), bike: new TriathlonPace(26), run: new TriathlonPace(4.5)},
-      new TriathlonTime(2, 14, 0),
-      {interval_01: new TriathlonTime(0, 4, 30), interval_02: new TriathlonTime(0, 2, 30)}
+      new TriathlonDistance(1900, 90000, 21100),
+      {swim: new TriathlonTime(1, 8, 0), bike: new TriathlonTime(3, 20, 0), run: new TriathlonTime(2, 7, 0)},
+      {swim: new TriathlonPace_swim(1, 47), bike: new TriathlonPace(7.5), run: new TriathlonPace(2.77)},
+      new TriathlonTime(6, 56, 20),
+      {interval_01: new TriathlonTime(0, 9, 50), interval_02: new TriathlonTime(0, 11, 30)}
     );
 
     const recorde_04 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 27, 0), bike: new TriathlonTime(1, 22, 0), run: new TriathlonTime(0, 55, 0)},
-      {swim: new TriathlonPace_swim(1, 35), bike: new TriathlonPace(23), run: new TriathlonPace(6)},
-      new TriathlonTime(2, 44, 0),
-      {interval_01: new TriathlonTime(0, 6, 0), interval_02: new TriathlonTime(0, 3, 30)}
+      new TriathlonDistance(3800, 180000, 42195),
+      {swim: new TriathlonTime(2, 10, 0), bike: new TriathlonTime(7, 12, 0), run: new TriathlonTime(4, 34, 0)},
+      {swim: new TriathlonPace_swim(1, 43), bike: new TriathlonPace(6.94), run: new TriathlonPace(2.57)},
+      new TriathlonTime(14, 13, 30),
+      {interval_01: new TriathlonTime(0, 8, 0), interval_02: new TriathlonTime(0, 9, 30)}
     );
 
     const recorde_05 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 25, 0), bike: new TriathlonTime(1, 17, 0), run: new TriathlonTime(0, 47, 0)},
-      {swim: new TriathlonPace_swim(1, 29), bike: new TriathlonPace(24.5), run: new TriathlonPace(5.2)},
-      new TriathlonTime(2, 29, 0),
-      {interval_01: new TriathlonTime(0, 5, 15), interval_02: new TriathlonTime(0, 3, 45)}
+      new TriathlonDistance(750, 20000, 5000),
+      {swim: new TriathlonTime(0, 28, 0), bike: new TriathlonTime(0, 43, 0), run: new TriathlonTime(0, 27, 0)},
+      {swim: new TriathlonPace_swim(1, 52), bike: new TriathlonPace(7.75), run: new TriathlonPace(3.09)},
+      new TriathlonTime(1, 41, 33),
+      {interval_01: new TriathlonTime(0, 1, 20), interval_02: new TriathlonTime(0, 2, 13)}
     );
 
     return [recorde_05, recorde_04, recorde_03, recorde_02, recorde_01];
@@ -394,27 +394,27 @@ export class AppComponent
   getPreviousThreeRecords()
   {
     const recorde_01 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 25, 30), bike: new TriathlonTime(1, 15, 0), run: new TriathlonTime(0, 45, 0)},
-      {swim: new TriathlonPace_swim(1, 30), bike: new TriathlonPace(25), run: new TriathlonPace(5)},
-      new TriathlonTime(2, 25, 30),
-      {interval_01: new TriathlonTime(0, 5, 0), interval_02: new TriathlonTime(0, 3, 0)}
+      new TriathlonDistance(750, 2000, 5000),
+      {swim: new TriathlonTime(0, 30, 0), bike: new TriathlonTime(0, 40, 0), run: new TriathlonTime(0, 25, 0)},
+      {swim: new TriathlonPace_swim(2, 0), bike: new TriathlonPace(8.33), run: new TriathlonPace(3.33)},
+      new TriathlonTime(1, 40, 0),
+      {interval_01: new TriathlonTime(0, 2, 0), interval_02: new TriathlonTime(0, 3, 0)}
     );
 
     const recorde_02 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 26, 0), bike: new TriathlonTime(1, 20, 0), run: new TriathlonTime(0, 50, 0)},
-      {swim: new TriathlonPace_swim(1, 32), bike: new TriathlonPace(24), run: new TriathlonPace(5.5)},
-      new TriathlonTime(2, 30, 0),
-      {interval_01: new TriathlonTime(0, 5, 30), interval_02: new TriathlonTime(0, 3, 30)}
+      new TriathlonDistance(1500, 40000, 10000),
+      {swim: new TriathlonTime(1, 5, 0), bike: new TriathlonTime(1, 25, 0), run: new TriathlonTime(0, 55, 0)},
+      {swim: new TriathlonPace_swim(2, 10), bike: new TriathlonPace(7.84), run: new TriathlonPace(3.03)},
+      new TriathlonTime(3, 34, 19),
+      {interval_01: new TriathlonTime(0, 5, 33), interval_02: new TriathlonTime(0, 3, 46)}
     );
 
     const recorde_03 = this.setRecord(
-      new TriathlonDistance(1500, 40, 10),
-      {swim: new TriathlonTime(0, 24, 0), bike: new TriathlonTime(1, 10, 0), run: new TriathlonTime(0, 40, 0)},
-      {swim: new TriathlonPace_swim(1, 28), bike: new TriathlonPace(26), run: new TriathlonPace(4.5)},
-      new TriathlonTime(2, 14, 0),
-      {interval_01: new TriathlonTime(0, 4, 30), interval_02: new TriathlonTime(0, 2, 30)}
+      new TriathlonDistance(1900, 90000, 21100),
+      {swim: new TriathlonTime(1, 8, 0), bike: new TriathlonTime(3, 20, 0), run: new TriathlonTime(2, 7, 0)},
+      {swim: new TriathlonPace_swim(1, 47), bike: new TriathlonPace(7.5), run: new TriathlonPace(2.77)},
+      new TriathlonTime(6, 56, 20),
+      {interval_01: new TriathlonTime(0, 9, 50), interval_02: new TriathlonTime(0, 11, 30)}
     );
 
     return [recorde_03, recorde_02, recorde_01];

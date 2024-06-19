@@ -164,13 +164,13 @@
                             <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"/>
                             <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0"/>
                         </svg>
-                        <input type="number" [(ngModel)]="total_time.hour" (keyup)="valueChange();" class="inp-time-pace ms-2">
+                        <input type="number" readonly [(ngModel)]="total_time.hour" (keyup)="valueChange();" class="inp-time-pace ms-2">
                         h
                         <span>:</span>
-                        <input type="number" [(ngModel)]="total_time.minute" (keyup)="valueChange();" class="inp-time-pace">
+                        <input type="number" readonly [(ngModel)]="total_time.minute" (keyup)="valueChange();" class="inp-time-pace">
                         m
                         <span>:</span>
-                        <input type="number" [(ngModel)]="total_time.second" (keyup)="valueChange();" class="inp-time-pace">
+                        <input type="number" readonly [(ngModel)]="total_time.second" (keyup)="valueChange();" class="inp-time-pace">
                         s
                     </div>
                 </div>
@@ -353,7 +353,7 @@
                                         <tr>
                                             <td></td>
                                             <td>(
-                                                <span class="m-0 p-0" *ngIf="calculatePacePercentageDifference(swim_pace[0], averagePacePrevious03['swim'])[0] != '-'">+</span>
+                                                <span class="m-0 p-0" *ngIf="calculateTimePercentageDifference(swim_time[0], averageTimePrevious03['swim'])[0] != '-'">+</span>
                                                 {{calculateTimeDifference(swim_time, averageTimePrevious03.swim)}}
                                                 )</td>
                                             <td>(
