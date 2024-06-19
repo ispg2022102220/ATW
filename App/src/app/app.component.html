@@ -222,7 +222,7 @@
         <div class="container my-5 p-0 d-flex justify-content-between align-items-center">
             <div class="info-container-xl p-4 rounded-2">
                 <div class="text-center title p-2 rounded-2">
-                    <h3 class="p-0 m-0">Analytics</h3>
+                    <h3 class="p-0 m-0">Results Analysis</h3>
                 </div>
                 <div class="feedback-container my-4">
                     <div class="statistics-container">
@@ -801,7 +801,8 @@
                     </div>
                     <div class="list-container" *ngIf="goal_result['distance'].bike != 0">
                         <div class="list-goal">
-                            <h4 class="text-center title-list mb-0 p-2">Goal</h4>
+                            <h4 class="text-center title-list mb-0 p-3 rounded-2">History</h4>
+                            <h4 class="text-center title-list mb-0 p-2 mt-3">Goal</h4>
                             <div class="info-list-container p-3">
                                 <div>
                                     <h5>Distance:</h5>
@@ -911,7 +912,8 @@
                     </div>
                     <div class="list-container" *ngIf="goal_result['distance'].bike == 0">
                         <div class="list-goal">
-                            <h4 class="text-center title-list mb-0 p-2">Previous 5</h4>
+                            <h4 class="text-center title-list mb-0 p-3 rounded-2">History</h4>
+                            <h4 class="text-center title-list mb-0 mt-3 p-2">Previous 5</h4>
                             <div class="info-list-container-previous p-3" [class.last]="object == previous_05[previous_05.length - 1]" *ngFor="let object of previous_05">
                                 <div>
                                     <h5>Distance:</h5>

@@ -676,6 +676,8 @@ export class AppComponent
     this.update_run_pace();
     this.update_swim_pace();
 
+    this.totalTimeUpdate();
+
     this.calculateAverageTimePercentageDifference05();
     this.calculateAverageTimePercentageDifference03();
     this.calculateAverageTimePercentageDifferenceGoal();
@@ -707,6 +709,8 @@ export class AppComponent
     this.bike_time[0]['hour'] = hours;
     this.bike_time[0]['minute'] = minutes;
     this.bike_time[0]['second'] = seconds;
+
+    this.totalTimeUpdate();
   }
 
   // Time input changed
@@ -735,6 +739,8 @@ export class AppComponent
     this.run_time[0]['hour'] = hours;
     this.run_time[0]['minute'] = minutes;
     this.run_time[0]['second'] = seconds;
+
+    this.totalTimeUpdate();
   }
 
   update_run_pace() {
@@ -762,6 +768,8 @@ export class AppComponent
     this.swim_time[0]['hour'] = hours;
     this.swim_time[0]['minute'] = minutes;
     this.swim_time[0]['second'] = seconds;
+
+    this.totalTimeUpdate();
   }
 
   update_swim_pace() {
